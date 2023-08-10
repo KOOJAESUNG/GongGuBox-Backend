@@ -4,6 +4,7 @@ package com.gonggubox.domain.member;
 import com.gonggubox.constant.MemberClass;
 import com.gonggubox.constant.Role;
 import com.gonggubox.domain.TimeStamp;
+import com.gonggubox.domain.UserEntity;
 import com.gonggubox.domain.cart.CartEntity;
 import com.gonggubox.domain.order.OrderEntity;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class MemberEntity extends TimeStamp {
+public class MemberEntity extends TimeStamp implements UserEntity {
 
     @Id
     @Column(name = "member_id")
@@ -32,7 +33,7 @@ public class MemberEntity extends TimeStamp {
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    private final Role role = Role.ADMIN;
+    private final Role role = Role.MEMBER;
 
     @Enumerated(EnumType.STRING)
     private MemberClass memberClass = MemberClass.BRONZE;

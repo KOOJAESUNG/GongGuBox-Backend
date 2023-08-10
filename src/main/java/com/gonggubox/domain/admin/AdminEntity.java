@@ -3,6 +3,7 @@ package com.gonggubox.domain.admin;
 
 import com.gonggubox.constant.Role;
 import com.gonggubox.domain.TimeStamp;
+import com.gonggubox.domain.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class AdminEntity extends TimeStamp {
+public class AdminEntity extends TimeStamp implements UserEntity {
 
     @Id
     @Column(name = "admin_id")
