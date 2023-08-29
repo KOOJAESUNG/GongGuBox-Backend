@@ -15,6 +15,8 @@ public class NoticeDto {
     @Builder
     public static class NoticePostDto {
 
+        private String title;
+
         private String content;
 
         private NoticeType noticeType;
@@ -45,6 +47,8 @@ public class NoticeDto {
     @Builder
     public static class NoticePatchDto {
         private Long id;
+
+        private String title;
 
         private String content;
 

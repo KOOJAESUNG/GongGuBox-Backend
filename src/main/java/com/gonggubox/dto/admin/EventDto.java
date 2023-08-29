@@ -16,6 +16,8 @@ public class EventDto {
     @Builder
     public static class EventPostDto {
 
+        private String title;
+
         private String content;
 
         private EventType eventType;
@@ -46,6 +48,8 @@ public class EventDto {
     @Builder
     public static class EventPatchDto {
         private Long id;
+
+        private String title;
 
         private String content;
 

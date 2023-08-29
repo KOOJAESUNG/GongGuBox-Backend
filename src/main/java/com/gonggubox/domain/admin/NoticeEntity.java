@@ -23,6 +23,8 @@ public class NoticeEntity extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String title; //공지사항의 제목
+
     @Lob
     @Column(columnDefinition = "TEXT")
     private String content; //공지사항의 텍스트 부분
