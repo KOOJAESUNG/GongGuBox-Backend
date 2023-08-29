@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 카테고리와 상품의 다대다 관계를 풀어내기 위한 Entity
+ */
 @Entity
 @Getter
 @Setter

@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 장바구니에 들어있는 상품이 몇개 들어있는지 저장하기 위한 Entity
+ */
 @Entity
 @Getter
 @Setter
@@ -15,7 +18,7 @@ public class CartItemEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Integer count;
+    private Integer count; //상품의 개수
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")

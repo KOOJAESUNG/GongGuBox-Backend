@@ -8,6 +8,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * 운영자 Entity - 이벤트, 공지사항, 회원 관리, 상품 관리 등의 권한을 가진다.
+ */
 @Entity
 @Getter
 @Setter

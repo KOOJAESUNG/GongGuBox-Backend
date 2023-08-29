@@ -3,10 +3,14 @@ package com.gonggubox.domain;
 
 import com.gonggubox.constant.Role;
 
-// Spring Security를 위한 Entity입니다!! 수정하지 말아주세요
+/**
+ * Spring Security를 위한 Entity입니다!! 수정하지 말아주세요
+ */
+
 public interface UserEntity {
 
     public Long getId();
+
     public String getUsername();
 
     public Role getRole();

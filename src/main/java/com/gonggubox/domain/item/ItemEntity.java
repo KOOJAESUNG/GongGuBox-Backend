@@ -13,6 +13,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 상품 Entity - 상품의 정보를 저장하고 있다.
+ */
 @Entity
 @Getter
 @Setter
@@ -51,12 +54,12 @@ public class ItemEntity extends TimeStamp {
     private ItemStatus itemStatus = ItemStatus.GATHER; //상태
 
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item")
     private List<OrderItemEntity> orderItem; //개수를 충족했는지 확인하기 위해 필요
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
-    private GroupEntity group;
+    private GroupEntity group; //당근마켓처럼 상품은 각 그룹에 귀속된다.
 
 //    @OneToMany(mappedBy = "item")
 //    private List<CategoryItemEntity> categoryItemList = new ArrayList<>();

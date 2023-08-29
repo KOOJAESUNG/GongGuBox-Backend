@@ -9,6 +9,10 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 이벤트 Entity - 상품 할인 등의 이벤트.
+ */
 @Entity
 @Getter
 @Setter
@@ -21,10 +25,10 @@ public class EventEntity extends TimeStamp {
 
     @Lob
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String content; //이벤트의 텍스트 부분
 
     @Enumerated(EnumType.STRING)
-    private EventType eventType;
+    private EventType eventType; //이벤트의 타입. ex) 경품추첨, 할인 등
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
@@ -32,7 +36,7 @@ public class EventEntity extends TimeStamp {
             joinColumns = @JoinColumn(name = "event_id")
     )
     @Column(name = "image_url")
-    private List<String> imageUrlList = new ArrayList<>();
+    private List<String> imageUrlList = new ArrayList<>(); // 이벤트의 이미지
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")

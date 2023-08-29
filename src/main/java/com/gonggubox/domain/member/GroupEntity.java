@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * 그룹 Entity - 대학교, 직장과 같은 그룹
+ */
 @Entity
 @Getter
 @Setter
@@ -21,9 +24,9 @@ public class GroupEntity {
     private String name; //그룹명
 
     @Embedded
-    private Address address;
+    private Address address; //그룹의 대표 주소
 
-    @OneToMany(mappedBy = "group")
-    private List<ItemEntity> itemList;
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ItemEntity> itemList; //Group이 삭제되면 Group에 속한 Item도 같이 삭제됨!!
 
 }

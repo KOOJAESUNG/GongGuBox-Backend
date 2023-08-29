@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 카테고리 Entity - 상품은 각 카테고리에 소속된다
+ */
 @Entity
 @Getter
 @Setter
@@ -17,13 +20,13 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private String name; //카테고리의 이름 ex) 생필품, 전자기기 등
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private CategoryEntity parent;
+    private CategoryEntity parent; //이 카테고리의 상위 카테고리.
 
-    @OneToMany(mappedBy = "parent")
-    private List<CategoryEntity> child = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CategoryEntity> child = new ArrayList<>(); //이 카테고리의 하위 카테고리.
 
 }
