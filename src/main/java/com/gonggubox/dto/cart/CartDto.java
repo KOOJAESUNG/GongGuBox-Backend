@@ -9,16 +9,16 @@ import java.util.List;
 
 public class CartDto {
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class CartPostDto {
-
-        private List<CartItemEntity> cartItemList;
-
-    }
+//    @Getter
+//    @Setter
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class CartPostDto {
+//
+//        private List<CartItemEntity> cartItemList;
+//
+//    }
 
     @Getter
     @Setter
@@ -35,15 +35,15 @@ public class CartDto {
         private List<CartItemEntity> cartItemList;
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class CartPatchDto {
-
-        private Long id;
-
-        private List<CartItemEntity> cartItemList;
-    }
+//    @Getter
+//    @Setter
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class CartPatchDto {
+//
+//        private Long id;
+//
+//        private List<CartItemEntity> cartItemList;
+//    }
 }

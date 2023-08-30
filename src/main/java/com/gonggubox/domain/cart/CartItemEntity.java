@@ -28,4 +28,11 @@ public class CartItemEntity {
     @JoinColumn(name = "item_id")
     private ItemEntity item;
 
+    public static CartItemEntity createCartItemEntity(CartEntity cart, ItemEntity item, Integer count) {
+        CartItemEntity cartItem = new CartItemEntity();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
+    }
 }

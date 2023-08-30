@@ -2,9 +2,11 @@ package com.gonggubox.mapper.cart;
 
 import com.gonggubox.domain.cart.CartEntity;
 import com.gonggubox.domain.cart.CartItemEntity;
-import com.gonggubox.domain.member.MemberEntity;
 import com.gonggubox.dto.cart.CartDto;
-import org.mapstruct.*;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
@@ -15,11 +17,11 @@ import java.util.List;
 )
 public interface CartMapper {
 
-    @Mappings({
-            @Mapping(target = "id",ignore = true),
-            @Mapping(source = "member",target = "member")
-    })
-    CartEntity toEntity(CartDto.CartPostDto CartPostDto, MemberEntity member);
+//    @Mappings({
+//            @Mapping(target = "id",ignore = true),
+//            @Mapping(source = "member",target = "member")
+//    })
+//    CartEntity toEntity(CartDto.CartPostDto CartPostDto, MemberEntity member);
 
 
     @Mapping(target = "totalPrice",expression = "java(this.getTotalPrice(cart.getCartItemList()))")
@@ -33,11 +35,11 @@ public interface CartMapper {
         return totalPrice;
     }
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "member", ignore = true),
-    })
-    public void updateFromPatchDto(CartDto.CartPatchDto CartPatchDto, @MappingTarget CartEntity cart);
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    @Mappings({
+//            @Mapping(target = "id", ignore = true),
+//            @Mapping(target = "member", ignore = true),
+//    })
+//    public void updateFromPatchDto(CartDto.CartPatchDto CartPatchDto, @MappingTarget CartEntity cart);
 
 }
