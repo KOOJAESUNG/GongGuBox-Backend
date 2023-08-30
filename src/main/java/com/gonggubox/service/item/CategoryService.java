@@ -21,18 +21,18 @@ public class CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Transactional
-    public CategoryEntity addCategory(CategoryDto.CategoryPostDto categoryPostDto) {
+    public CategoryDto.CategoryResponseDto addCategory(CategoryDto.CategoryPostDto categoryPostDto) {
         if (categoryPostDto.getParentCategoryName() != null) {
             CategoryEntity parentCategory = categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new);
             parentCategory.getChild().add(categoryMapper.toEntity(categoryPostDto));
         } else {
             categoryRepository.save(categoryMapper.toEntity(categoryPostDto));
         }
-        return categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new);
+        return categoryMapper.toResponseDto(categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new));
     }
 
-    public CategoryEntity getCategory(Long categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new);
+    public CategoryDto.CategoryResponseDto getCategory(Long categoryId) {
+        return categoryMapper.toResponseDto(categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new));
     }
 
     public void getCategoryTree() {
@@ -40,16 +40,15 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryEntity updateCategory(CategoryDto.CategoryPatchDto categoryPatchDto) {
+    public CategoryDto.CategoryResponseDto updateCategory(CategoryDto.CategoryPatchDto categoryPatchDto) {
         CategoryEntity categoryEntity = categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
         categoryMapper.updateFromPatchDto(categoryPatchDto,categoryEntity);
-        return categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        return categoryMapper.toResponseDto(categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
     }
     @Transactional
     public String deleteCategory(Long categoryId) {
         String name = categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new).getName();
         categoryRepository.deleteById(categoryId);
         return "삭제한 Category의 name : "+name;
-
     }
 }

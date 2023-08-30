@@ -24,21 +24,21 @@ public class NoticeService {
     private final AdminRepository adminRepository;
 
     @Transactional
-    public NoticeEntity createNotice(Long adminId, NoticeDto.NoticePostDto noticePostDto) {
-        return noticeRepository.save(
+    public NoticeDto.NoticeResponseDto createNotice(Long adminId, NoticeDto.NoticePostDto noticePostDto) {
+        return noticeMapper.toResponseDto(noticeRepository.save(
                 noticeMapper.toEntity(noticePostDto,adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new))
-        );
+        ));
     }
 
-    public NoticeEntity getNotice(Long noticeId) {
-        return noticeRepository.findById(noticeId).orElseThrow(EntityNotFoundException::new);
+    public NoticeDto.NoticeResponseDto getNotice(Long noticeId) {
+        return noticeMapper.toResponseDto(noticeRepository.findById(noticeId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional
-    public NoticeEntity updateNotice(NoticeDto.NoticePatchDto noticePatchDto) {
+    public NoticeDto.NoticeResponseDto updateNotice(NoticeDto.NoticePatchDto noticePatchDto) {
         NoticeEntity noticeEntity = noticeRepository.findById(noticePatchDto.getId()).orElseThrow(EntityNotFoundException::new);
         noticeMapper.updateFromPatchDto(noticePatchDto, noticeEntity);
-        return noticeRepository.findById(noticePatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        return noticeMapper.toResponseDto(noticeRepository.findById(noticePatchDto.getId()).orElseThrow(EntityNotFoundException::new));
     }
     @Transactional
     public String deleteNotice(Long noticeId) {

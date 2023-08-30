@@ -24,21 +24,21 @@ public class EventService {
     private final AdminRepository adminRepository;
 
     @Transactional
-    public EventEntity createEvent(Long adminId, EventDto.EventPostDto eventPostDto) {
-        return eventRepository.save(
+    public EventDto.EventResponseDto createEvent(Long adminId, EventDto.EventPostDto eventPostDto) {
+        return eventMapper.toResponseDto(eventRepository.save(
                 eventMapper.toEntity(eventPostDto,adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new))
-        );
+        ));
     }
 
-    public EventEntity getEvent(Long eventId) {
-        return eventRepository.findById(eventId).orElseThrow(EntityNotFoundException::new);
+    public EventDto.EventResponseDto getEvent(Long eventId) {
+        return eventMapper.toResponseDto(eventRepository.findById(eventId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional
-    public EventEntity updateEvent(EventDto.EventPatchDto eventPatchDto) {
+    public EventDto.EventResponseDto updateEvent(EventDto.EventPatchDto eventPatchDto) {
         EventEntity eventEntity = eventRepository.findById(eventPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
         eventMapper.updateFromPatchDto(eventPatchDto, eventEntity);
-        return eventRepository.findById(eventPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        return eventMapper.toResponseDto(eventRepository.findById(eventPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional

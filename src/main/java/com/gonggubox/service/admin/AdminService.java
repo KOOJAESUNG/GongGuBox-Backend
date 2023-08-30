@@ -21,20 +21,20 @@ public class AdminService {
     private final AdminMapper adminMapper;
 
     @Transactional
-    public AdminEntity createAdmin(AdminDto.AdminPostDto adminPostDto) {
+    public AdminDto.AdminResponseDto createAdmin(AdminDto.AdminPostDto adminPostDto) {
         if(!adminRepository.existsByUsername(adminPostDto.getUsername()))
-            return adminRepository.save(adminMapper.toEntity(adminPostDto));
+            return adminMapper.toResponseDto(adminRepository.save(adminMapper.toEntity(adminPostDto)));
         else throw new RuntimeException("createAdmin : 이미 존재하는 username 입니다!!!");
     }
 
-    public AdminEntity getAdmin(Long adminId) {
-        return adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new);
+    public AdminDto.AdminResponseDto getAdmin(Long adminId) {
+        return adminMapper.toResponseDto(adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new));
     }
     @Transactional
-    public AdminEntity updateAdmin(Long adminId, AdminDto.AdminPatchDto adminPatchDto) {
+    public AdminDto.AdminResponseDto updateAdmin(Long adminId, AdminDto.AdminPatchDto adminPatchDto) {
         AdminEntity adminEntity = adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new);
         adminMapper.updateFromPatchDto(adminPatchDto,adminEntity);
-        return adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new);
+        return adminMapper.toResponseDto(adminRepository.findById(adminId).orElseThrow(EntityNotFoundException::new));
     }
     @Transactional
     public String deleteAdmin(Long adminId) {
