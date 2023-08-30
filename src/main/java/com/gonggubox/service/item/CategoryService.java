@@ -23,7 +23,7 @@ public class CategoryService {
     @Transactional
     public CategoryDto.CategoryResponseDto addCategory(CategoryDto.CategoryPostDto categoryPostDto) {
         if (categoryPostDto.getParentCategoryName() != null) {
-            CategoryEntity parentCategory = categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new);
+            CategoryEntity parentCategory = categoryRepository.findByName(categoryPostDto.getParentCategoryName()).orElseThrow(EntityNotFoundException::new);
             parentCategory.getChild().add(categoryMapper.toEntity(categoryPostDto));
         } else {
             categoryRepository.save(categoryMapper.toEntity(categoryPostDto));
