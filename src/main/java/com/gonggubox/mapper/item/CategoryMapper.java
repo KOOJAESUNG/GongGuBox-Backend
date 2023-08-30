@@ -6,6 +6,9 @@ import com.gonggubox.repository.item.CategoryRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mapper(
         componentModel = "spring", // 빌드 시 구현체 만들고 빈으로 등록
         injectionStrategy = InjectionStrategy.CONSTRUCTOR, // 생성자 주입 전략
@@ -25,16 +28,32 @@ public abstract class CategoryMapper {
 
     @Named("categoryNameToCategoryEntity")
     CategoryEntity categoryNameToCategoryEntity(String categoryName) {
-        return categoryRepository.findByName(categoryName).get();
+        return categoryRepository.findByName(categoryName).orElse(null);
     }
 
+    @Named("categoryNameListToCategoryEntityList")
+    List<CategoryEntity> categoryNameListToCategoryEntityList(List<String> categoryNameList) {
+        List<CategoryEntity> temp = new ArrayList<>();
+        categoryNameList.forEach(o->temp.add(categoryNameToCategoryEntity(o)));
+        return temp;
+    }
 
-    public abstract CategoryDto.CategoryResponseDto toResponseDto(CategoryEntity CategoryEntity);
+    @Mappings({
+            @Mapping(target = "parent", expression = "java(toIdNameDto(categoryEntity.getParent()))"),
+            @Mapping(target = "child", expression = "java(toIdNameDtoList(categoryEntity.getChild()))")
+    })
+    public abstract CategoryDto.CategoryResponseDto toResponseDto(CategoryEntity categoryEntity);
+
+    abstract CategoryDto.CategoryIdNameDto toIdNameDto(CategoryEntity categoryEntity);
+    abstract List<CategoryDto.CategoryIdNameDto> toIdNameDtoList(List<CategoryEntity> categoryEntityList);
+
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
-            @Mapping(target = "id", ignore = true)
+            @Mapping(target = "id", ignore = true),
+            @Mapping(source = "parentCategoryName",target = "parent", qualifiedByName = "categoryNameToCategoryEntity"),
+            @Mapping(source = "childCategoryNameList",target = "child", qualifiedByName = "categoryNameListToCategoryEntityList")
     })
-    public abstract void updateFromPatchDto(CategoryDto.CategoryPatchDto CategoryPatchDto, @MappingTarget CategoryEntity CategoryEntity);
+    public abstract void updateFromPatchDto(CategoryDto.CategoryPatchDto CategoryPatchDto, @MappingTarget CategoryEntity categoryEntity);
 
 }

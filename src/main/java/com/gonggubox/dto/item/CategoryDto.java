@@ -1,6 +1,5 @@
 package com.gonggubox.dto.item;
 
-import com.gonggubox.domain.item.CategoryEntity;
 import lombok.*;
 
 import java.util.List;
@@ -32,10 +31,21 @@ public class CategoryDto {
 
         private String name;
 
-        private CategoryEntity parent;
+        private CategoryIdNameDto parent;
 
-        private List<CategoryEntity> child;
+        private List<CategoryIdNameDto> child;
 
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class CategoryIdNameDto {
+        private Long id;
+
+        private String name;
     }
 
     @Getter
@@ -48,9 +58,9 @@ public class CategoryDto {
 
         private String name;
 
-        private CategoryEntity parent;
+        private String parentCategoryName;
 
-        private List<CategoryEntity> child;
+        private List<String> childCategoryNameList;
 
     }
 }
