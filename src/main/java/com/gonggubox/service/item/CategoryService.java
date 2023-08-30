@@ -1,6 +1,10 @@
 package com.gonggubox.service.item;
 
+import com.gonggubox.domain.item.CategoryEntity;
 import com.gonggubox.dto.item.CategoryDto;
+import com.gonggubox.mapper.item.CategoryMapper;
+import com.gonggubox.repository.item.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,19 +15,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Transactional(readOnly = true)
 public class CategoryService {
+
+    private final CategoryRepository categoryRepository;
+
+    private final CategoryMapper categoryMapper;
+
     @Transactional
-    public void createCategory(CategoryDto.CategoryPostDto CategoryPostDto) {
+    public CategoryEntity addCategory(CategoryDto.CategoryPostDto categoryPostDto) {
+        if (categoryPostDto.getParentCategoryName() != null) {
+            CategoryEntity parentCategory = categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new);
+            parentCategory.getChild().add(categoryMapper.toEntity(categoryPostDto));
+        } else {
+            categoryRepository.save(categoryMapper.toEntity(categoryPostDto));
+        }
+        return categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public CategoryEntity getCategory(Long categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public void getCategoryTree() {
 
     }
-    public void getCategory(Long CategoryId) {
 
+    @Transactional
+    public CategoryEntity updateCategory(CategoryDto.CategoryPatchDto categoryPatchDto) {
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        categoryMapper.updateFromPatchDto(categoryPatchDto,categoryEntity);
+        return categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
     }
     @Transactional
-    public void updateCategory(CategoryDto.CategoryPatchDto CategoryPatchDto) {
-
-    }
-    @Transactional
-    public void deleteCategory(Long CategoryId) {
+    public String deleteCategory(Long categoryId) {
+        String name = categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new).getName();
+        categoryRepository.deleteById(categoryId);
+        return "삭제한 Category의 name : "+name;
 
     }
 }

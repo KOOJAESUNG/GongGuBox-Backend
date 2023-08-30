@@ -16,9 +16,9 @@ public class CategoryDto {
 
         private String name;
 
-        private CategoryEntity parent;
+        private String parentCategoryName;
 
-        private List<CategoryEntity> child;
+//        private List<CategoryEntity> childCategoryName; //상위 카테고리만 알면 될듯??
 
     }
 
