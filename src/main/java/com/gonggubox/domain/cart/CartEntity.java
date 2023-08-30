@@ -58,6 +58,6 @@ public class CartEntity {
 
     public String clearCart() {
         this.cartItemList.clear();
-        return "장바구니 초기화 완료";
+        return this.member.getUsername() + "장바구니 초기화 완료";
     }
 }
