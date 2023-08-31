@@ -31,8 +31,12 @@ public class CategoryService {
         return categoryMapper.toResponseDto(categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new));
     }
 
-    public CategoryDto.CategoryResponseDto getCategory(Long categoryId) {
+    public CategoryDto.CategoryResponseDto getCategoryById(Long categoryId) {
         return categoryMapper.toResponseDto(categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new));
+    }
+
+    public CategoryDto.CategoryResponseDto getCategoryByName(String categoryName) {
+        return categoryMapper.toResponseDto(categoryRepository.findByName(categoryName).orElseThrow(EntityNotFoundException::new));
     }
 
     public void getCategoryTree() {
@@ -45,6 +49,17 @@ public class CategoryService {
         categoryMapper.updateFromPatchDto(categoryPatchDto,categoryEntity);
         return categoryMapper.toResponseDto(categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
     }
+
+//    @Transactional
+//    public CategoryDto.CategoryResponseDto changeParentCategory() {
+//
+//    }
+//
+//    @Transactional
+//    public CategoryDto.CategoryResponseDto changeChildCategory() {
+//
+//    }
+
     @Transactional
     public String deleteCategory(Long categoryId) {
         String name = categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new).getName();

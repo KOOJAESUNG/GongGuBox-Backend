@@ -3,6 +3,7 @@ package com.gonggubox.mapper.item;
 import com.gonggubox.domain.item.CategoryEntity;
 import com.gonggubox.dto.item.CategoryDto;
 import com.gonggubox.repository.item.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,31 +20,25 @@ public abstract class CategoryMapper {
     @Autowired
     private CategoryRepository categoryRepository;
 
+
     @Mappings({
             @Mapping(target = "id",ignore = true),
             @Mapping(target = "child", ignore = true),
             @Mapping(source = "parentCategoryName", target = "parent", qualifiedByName = "categoryNameToCategoryEntity")
     })
     public abstract CategoryEntity toEntity(CategoryDto.CategoryPostDto categoryPostDto);
-
     @Named("categoryNameToCategoryEntity")
     CategoryEntity categoryNameToCategoryEntity(String categoryName) {
-        return categoryRepository.findByName(categoryName).orElse(null);
+        if(categoryName==null) return null;
+        return categoryRepository.findByName(categoryName).orElseThrow(EntityNotFoundException::new);
     }
 
-    @Named("categoryNameListToCategoryEntityList")
-    List<CategoryEntity> categoryNameListToCategoryEntityList(List<String> categoryNameList) {
-        List<CategoryEntity> temp = new ArrayList<>();
-        categoryNameList.forEach(o->temp.add(categoryNameToCategoryEntity(o)));
-        return temp;
-    }
 
     @Mappings({
             @Mapping(target = "parent", expression = "java(toIdNameDto(categoryEntity.getParent()))"),
             @Mapping(target = "child", expression = "java(toIdNameDtoList(categoryEntity.getChild()))")
     })
     public abstract CategoryDto.CategoryResponseDto toResponseDto(CategoryEntity categoryEntity);
-
     abstract CategoryDto.CategoryIdNameDto toIdNameDto(CategoryEntity categoryEntity);
     abstract List<CategoryDto.CategoryIdNameDto> toIdNameDtoList(List<CategoryEntity> categoryEntityList);
 
@@ -55,5 +50,13 @@ public abstract class CategoryMapper {
             @Mapping(source = "childCategoryNameList",target = "child", qualifiedByName = "categoryNameListToCategoryEntityList")
     })
     public abstract void updateFromPatchDto(CategoryDto.CategoryPatchDto CategoryPatchDto, @MappingTarget CategoryEntity categoryEntity);
+    @Named("categoryNameListToCategoryEntityList")
+    List<CategoryEntity> categoryNameListToCategoryEntityList(List<String> categoryNameList) {
+        if(categoryNameList==null) return null;
+        List<CategoryEntity> temp = new ArrayList<>();
+        categoryNameList.forEach(o->temp.add(categoryNameToCategoryEntity(o)));
+        return temp;
+    }
+
 
 }

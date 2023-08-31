@@ -18,9 +18,14 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.addCategory(categoryPostDto));
     }
 
-    @GetMapping("/getCategory")
-    public ResponseEntity<?> getCategory(@RequestParam Long categoryId) {
-        return ResponseEntity.ok().body(categoryService.getCategory(categoryId));
+    @GetMapping("/getCategoryById")
+    public ResponseEntity<?> getCategoryById(@RequestParam Long categoryId) {
+        return ResponseEntity.ok().body(categoryService.getCategoryById(categoryId));
+    }
+
+    @GetMapping("/getCategoryByName")
+    public ResponseEntity<?> getCategoryByName(@RequestParam String categoryName) {
+        return ResponseEntity.ok().body(categoryService.getCategoryByName(categoryName));
     }
 
 //    @GetMapping("/getCategoryTree")
