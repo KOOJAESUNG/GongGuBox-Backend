@@ -3,8 +3,7 @@ package com.gonggubox.dto.item;
 
 import com.gonggubox.constant.Address;
 import com.gonggubox.constant.ItemStatus;
-import com.gonggubox.domain.member.GroupEntity;
-import com.gonggubox.domain.order.OrderItemEntity;
+import com.gonggubox.dto.member.GroupDto;
 import lombok.*;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public class ItemDto {
 
         private String content; //설명
 
-        private GroupEntity group;
+        private Long groupId;
 
     }
 
@@ -58,9 +57,7 @@ public class ItemDto {
 
         private ItemStatus itemStatus; //상태
 
-        private List<OrderItemEntity> orderItem;
-
-        private GroupEntity group;
+        private GroupDto.GroupResponseDto group;
 
     }
 
@@ -74,7 +71,7 @@ public class ItemDto {
 
         private String name; //상품명
 
-        private List<String> imageList; //상품 이미지
+//        private List<String> imageList; //상품 이미지
 
         private Long price; //가격
 
@@ -88,7 +85,7 @@ public class ItemDto {
 
         private ItemStatus itemStatus; //상태
 
-        private GroupEntity group;
+        private Long groupId;
 
     }
 }
