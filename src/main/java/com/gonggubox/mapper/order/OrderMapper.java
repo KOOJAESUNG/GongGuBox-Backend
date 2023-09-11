@@ -2,36 +2,65 @@ package com.gonggubox.mapper.order;
 
 import com.gonggubox.domain.member.MemberEntity;
 import com.gonggubox.domain.order.OrderEntity;
+import com.gonggubox.domain.order.OrderItemEntity;
 import com.gonggubox.dto.order.OrderDto;
+import com.gonggubox.dto.order.OrderItemDto;
+import com.gonggubox.mapper.item.ItemMapper;
 import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mapper(
         componentModel = "spring", // 빌드 시 구현체 만들고 빈으로 등록
         injectionStrategy = InjectionStrategy.CONSTRUCTOR, // 생성자 주입 전략
         unmappedTargetPolicy = ReportingPolicy.ERROR // 일치하지 않는 필드가 있으면 빌드 시 에러
 )
-public interface OrderMapper {
+public abstract class OrderMapper {
+
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+
+    @Autowired
+    private ItemMapper itemMapper;
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "createAt", ignore = true),
             @Mapping(target = "modifiedAt", ignore = true),
-            @Mapping(target = "totalPrice", ignore = true),
+            @Mapping(target = "totalPrice", ignore = true), //todo : 구현
+            @Mapping(source = "orderPostDto.orderItemPostDtoList",target = "orderItems", qualifiedByName = "orderItemPostDtoListToOrderItemEntityList"),
             @Mapping(source = "member", target = "member")
     })
-    OrderEntity toEntity(OrderDto.OrderPostDto OrderPostDto, MemberEntity member);
+    public abstract OrderEntity toEntity(OrderDto.OrderPostDto orderPostDto, MemberEntity member);
+    @Named("orderItemPostDtoListToOrderItemEntityList")
+    List<OrderItemEntity> orderItemPostDtoListToOrderItemEntityList(List<OrderItemDto.OrderItemPostDto> orderItemPostDtoList) {
+        List<OrderItemEntity> temp = new ArrayList<>();
+        orderItemPostDtoList.forEach(o->temp.add(orderItemMapper.toEntity(o)));
+        return temp;
+    }
 
-
-    OrderDto.OrderResponseDto toResponseDto(OrderEntity OrderEntity);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "createAt", ignore = true),
-            @Mapping(target = "modifiedAt", ignore = true),
-            @Mapping(target = "member", ignore = true),
-            @Mapping(target = "totalPrice", ignore = true)
+            @Mapping(target = "memberId", expression = "java(orderEntity.getMember().getId())"),
+            @Mapping(source = "orderItems", target = "orderItemResponseDtoList", qualifiedByName = "orderItemListToOrderItemResponseDtoList"),
     })
-    public void updateFromPatchDto(OrderDto.OrderPatchDto OrderPatchDto, @MappingTarget OrderEntity OrderEntity);
+    public abstract OrderDto.OrderResponseDto toResponseDto(OrderEntity orderEntity);
+    @Named("orderItemListToOrderItemResponseDtoList")
+    List<OrderItemDto.OrderItemResponseDto> orderItemListToOrderItemResponseDtoList(List<OrderItemEntity> orderItems) {
+        List<OrderItemDto.OrderItemResponseDto> temp = new ArrayList<>();
+        orderItems.forEach(o->temp.add(orderItemMapper.toResponseDto(o)));
+        return temp;
+    }
+
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    @Mappings({
+//            @Mapping(target = "id", ignore = true),
+//            @Mapping(target = "createAt", ignore = true),
+//            @Mapping(target = "modifiedAt", ignore = true),
+//            @Mapping(target = "member", ignore = true),
+//            @Mapping(target = "totalPrice", ignore = true)
+//    })
+//    public abstract void updateFromPatchDto(OrderDto.OrderPatchDto orderPatchDto, @MappingTarget OrderEntity orderEntity);
 
 }

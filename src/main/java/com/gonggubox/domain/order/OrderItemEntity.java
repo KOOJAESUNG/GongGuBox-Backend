@@ -26,7 +26,7 @@ public class OrderItemEntity {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-    private int orderPrice; //주문 당시의 상품 가격
+    private Long orderPrice; //주문 당시의 상품 가격
 
     private int count; //주문한 상품의 개수
 

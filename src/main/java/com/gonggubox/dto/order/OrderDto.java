@@ -1,6 +1,5 @@
 package com.gonggubox.dto.order;
 
-import com.gonggubox.domain.member.MemberEntity;
 import com.gonggubox.domain.order.OrderItemEntity;
 import lombok.*;
 
@@ -15,9 +14,10 @@ public class OrderDto {
     @Builder
     public static class OrderPostDto {
 
-        private List<OrderItemEntity> orderItems;
+        private List<OrderItemDto.OrderItemPostDto> orderItemPostDtoList;
 
     }
+
 
     @Getter
     @Setter
@@ -27,11 +27,11 @@ public class OrderDto {
     public static class OrderResponseDto {
         private Long id;
 
-        private MemberEntity member;
+        private Long memberId;
 
         private Long totalPrice;
 
-        private List<OrderItemEntity> orderItems;
+        private List<OrderItemDto.OrderItemResponseDto> orderItemResponseDtoList;
     }
 
     @Getter
