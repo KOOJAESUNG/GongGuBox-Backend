@@ -1,7 +1,7 @@
 package com.gonggubox.dto.member;
 
 import com.gonggubox.constant.Address;
-import com.gonggubox.domain.item.ItemEntity;
+import com.gonggubox.dto.item.ItemDto;
 import lombok.*;
 
 import java.util.List;
@@ -41,7 +41,9 @@ public class GroupDto {
     public static class GroupItemResponseDto {
         private Long groupId;
 
-        private List<ItemEntity> itemList;
+        private String groupName;
+
+        private List<ItemDto.ItemResponseDto> itemList;
     }
 
 

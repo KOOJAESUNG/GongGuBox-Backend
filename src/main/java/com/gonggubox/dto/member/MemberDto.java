@@ -44,7 +44,7 @@ public class MemberDto {
 
         private MemberClass memberClass;
 
-        private List<GroupMemberEntity> groupMemberList;
+        private List<GroupMemberEntity> groupMemberList; //todo : 변경 요망
 
     }
 
