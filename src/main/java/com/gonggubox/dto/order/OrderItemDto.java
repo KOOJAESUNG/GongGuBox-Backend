@@ -22,12 +22,14 @@ public class OrderItemDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    @Builder
+//    @Builder
     public static class OrderItemResponseDto {
 
         private ItemDto.ItemResponseDto itemResponseDto;
 
         private Long count;
+
+        private Long orderPrice;
 
     }
 

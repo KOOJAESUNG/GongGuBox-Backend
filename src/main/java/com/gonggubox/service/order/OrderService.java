@@ -31,12 +31,14 @@ public class OrderService {
     public OrderDto.OrderResponseDto createOrder(Long memberId, OrderDto.OrderPostDto orderPostDto) {
         MemberEntity member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
         OrderEntity order = orderMapper.toEntity(orderPostDto, member);
+        order.setOrderInOrderItems(); // cascade persist를 사용해 orderItems를 저장할 때 orderItem의 order를 지정하기 위한 메서드
         return orderMapper.toResponseDto(orderRepository.save(order));
     }
 
-    public void getOrder(Long OrderId) {
-
+    public OrderDto.OrderResponseDto getOrder(Long orderId) {
+        return orderMapper.toResponseDto(orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new));
     }
+
 
     @Transactional
     public void updateOrder(OrderDto.OrderPatchDto OrderPatchDto) {
@@ -44,7 +46,9 @@ public class OrderService {
     }
 
     @Transactional
-    public void deleteOrder(Long OrderId) {
-
+    public String deleteOrder(Long orderId) {
+        Long id = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new).getId();
+        orderRepository.deleteById(orderId);
+        return "삭제한 Order의 id : " + id;
     }
 }
