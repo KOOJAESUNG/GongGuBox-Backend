@@ -26,12 +26,13 @@ public abstract class OrderItemMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(source = "orderItemPostDto.itemId",target = "item", qualifiedByName = "itemIdToItemEntity"),
-            @Mapping(target = "orderPrice", expression = "java(this.getPriceByItemId(orderItemPostDto.getItemId()))"),
+            @Mapping(source = "itemId",target = "item", qualifiedByName = "itemIdToItemEntity"),
+            @Mapping(source = "itemId", target = "orderPrice", qualifiedByName = "itemIdToPrice"),
             @Mapping(target = "order", ignore = true)
     })
     public abstract OrderItemEntity toEntity(OrderItemDto.OrderItemPostDto orderItemPostDto);
-    Long getPriceByItemId(Long itemId) {
+    @Named("itemIdToPrice")
+    Long itemIdToPrice(Long itemId) {
         return itemRepository.getPriceById(itemId).orElseThrow(EntityNotFoundException::new);
     }
     @Named("itemIdToItemEntity")
