@@ -2,12 +2,15 @@ package com.gonggubox.mapper.cart;
 
 import com.gonggubox.domain.cart.CartEntity;
 import com.gonggubox.domain.cart.CartItemEntity;
+import com.gonggubox.domain.member.MemberEntity;
 import com.gonggubox.dto.cart.CartDto;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import com.gonggubox.dto.member.MemberDto;
+import com.gonggubox.mapper.item.ItemMapper;
+import com.gonggubox.mapper.member.MemberMapper;
+import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(
@@ -15,7 +18,13 @@ import java.util.List;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR, // 생성자 주입 전략
         unmappedTargetPolicy = ReportingPolicy.ERROR // 일치하지 않는 필드가 있으면 빌드 시 에러
 )
-public interface CartMapper {
+public abstract class CartMapper {
+
+    @Autowired
+    private ItemMapper itemMapper;
+
+    @Autowired
+    private MemberMapper memberMapper;
 
 //    @Mappings({
 //            @Mapping(target = "id",ignore = true),
@@ -24,16 +33,37 @@ public interface CartMapper {
 //    CartEntity toEntity(CartDto.CartPostDto CartPostDto, MemberEntity member);
 
 
-    @Mapping(target = "totalPrice",expression = "java(this.getTotalPrice(cart.getCartItemList()))")
-    CartDto.CartResponseDto toResponseDto(CartEntity cart);
-
-    default Long getTotalPrice(List<CartItemEntity> cartItemList){
+    @Mappings({
+            @Mapping(target = "totalPrice",expression = "java(this.getTotalPrice(cart.getCartItemList()))"),
+            @Mapping(source = "cartItemList", target = "cartItemList", qualifiedByName = "cartItemEntityListToCartItemResponseDtoList"),
+            @Mapping(source = "member", target = "member", qualifiedByName = "memberEntityToMemberResponseDto")
+    })
+    public abstract CartDto.CartResponseDto toResponseDto(CartEntity cart);
+    @Named("cartItemEntityListToCartItemResponseDtoList")
+    List<CartDto.CartItemResponseDto> cartItemEntityListToCartItemResponseDtoList(List<CartItemEntity> cartItemEntityList){
+        List<CartDto.CartItemResponseDto> temp = new ArrayList<>();
+        cartItemEntityList.forEach(o->{
+            temp.add(
+                    CartDto.CartItemResponseDto.builder()
+                    .count(o.getCount())
+                    .item(itemMapper.toResponseDto(o.getItem()))
+                    .build()
+                    );
+        });
+        return temp;
+    }
+    @Named("memberEntityToMemberResponseDto")
+    MemberDto.MemberResponseDto memberEntityToMemberResponseDto(MemberEntity member) {
+        return memberMapper.toResponseDto(member);
+    }
+    Long getTotalPrice(List<CartItemEntity> cartItemList){
         long totalPrice = 0L;
         for (CartItemEntity cartItemEntity : cartItemList) {
             totalPrice+=cartItemEntity.getItem().getPrice()* cartItemEntity.getCount();
         }
         return totalPrice;
     }
+
 
 //    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 //    @Mappings({
