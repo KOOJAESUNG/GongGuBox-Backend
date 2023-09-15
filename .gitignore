@@ -37,6 +37,6 @@ out/
 .vscode/
 
 *.yml
-*.properties
+#*.properties
 *.p12
 /src/main/generated/
