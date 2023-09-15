@@ -2,7 +2,6 @@ package com.gonggubox.dto.admin;
 
 
 import com.gonggubox.constant.EventType;
-import com.gonggubox.domain.admin.AdminEntity;
 import lombok.*;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public class EventDto {
 
         private List<String> imageUrlList;
 
-        private AdminEntity admin;
+        private AdminDto.AdminResponseDto admin;
     }
 
     @Getter
