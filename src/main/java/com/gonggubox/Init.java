@@ -43,6 +43,5 @@ public class Init {
         MemberDto.MemberPostDto memberPostDto = new MemberDto.MemberPostDto();
         MemberEntity entity = memberMapper.toEntity(memberPostDto);
         entity.setMemberInGroupMemberList();
-
     }
 }
