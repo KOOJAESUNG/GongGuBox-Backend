@@ -31,6 +31,6 @@ jobs:
               pwd
               java -version
               which java
-              JAVA_HOME = /home/koo/.sdkman/candidates/java/current
+              JAVA_HOME=/home/koo/.sdkman/candidates/java/current
               which java
 
