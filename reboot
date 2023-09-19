@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./off
+
+BUILD_JAR=$(ls ./build/libs/*.jar)
+JAR_NAME=$(basename $BUILD_JAR)
+
+nohup java -jar ./build/libs/$JAR_NAME &
