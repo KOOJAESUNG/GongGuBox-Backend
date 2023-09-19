@@ -9,14 +9,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
-   
+
     steps:
-            - name: Deploy to Server
-              uses: appleboy/ssh-action@v0.1.7
-              with:
-                  host: ${{ secrets.PI_HOST }}
-                  username: ${{ secrets.PI_USERNAME }}
-                  key: ${{ secrets.PI_KEY }}
-                  script: |                    
-                      cd SpringProject/GongGuBox-Backend/
-                      ./update
+      - uses: actions/checkout@v3
+      - name: Set up JDK 20
+        uses: actions/setup-java@v3
+        with:
+          java-version: '20'
+          distribution: 'adopt'
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+            host: ${{ secrets.PI_HOST }}
+            username: ${{ secrets.PI_USERNAME }}
+            key: ${{ secrets.PI_KEY }}
+            script: |                    
+                cd SpringProject/GongGuBox-Backend/
+                ./update
