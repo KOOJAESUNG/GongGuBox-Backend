@@ -7,7 +7,7 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
 
     steps:
@@ -26,4 +26,4 @@ jobs:
             key: ${{ secrets.PI_KEY }}
             script: |                    
                 cd SpringProject/GongGuBox-Backend/
-                ./update
+                ./gradlew clean build -x test
