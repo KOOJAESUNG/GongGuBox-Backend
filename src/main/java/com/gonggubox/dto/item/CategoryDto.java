@@ -1,5 +1,8 @@
 package com.gonggubox.dto.item;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public class CategoryDto {
     @Builder
     public static class CategoryPostDto {
 
+        @NotBlank
         private String name;
 
         private String parentCategoryName; //null 이 아니라면 해당하는 부모 카테고리 아래에 카테고리를 생성
@@ -54,6 +58,9 @@ public class CategoryDto {
     @NoArgsConstructor
     @Builder
     public static class CategoryPatchDto {
+
+        @NotNull
+        @Min(1)
         private Long id;
 
         private String name;

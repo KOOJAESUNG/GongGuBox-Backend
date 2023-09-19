@@ -1,6 +1,8 @@
 package com.gonggubox.dto.order;
 
 import com.gonggubox.dto.item.ItemDto;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 public class OrderItemDto {
@@ -12,8 +14,11 @@ public class OrderItemDto {
     @Builder
     public static class OrderItemPostDto {
 
+        @NotNull
         private Long itemId;
 
+        @NotNull
+        @Min(1)
         private Long count;
 
     }

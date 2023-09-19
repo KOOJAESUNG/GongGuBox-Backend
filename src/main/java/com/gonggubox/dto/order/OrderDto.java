@@ -1,7 +1,9 @@
 package com.gonggubox.dto.order;
 
-import com.gonggubox.domain.order.OrderItemEntity;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class OrderDto {
     @Builder
     public static class OrderPostDto {
 
+        @NotNull
+        @UniqueElements
         private List<OrderItemDto.OrderItemPostDto> orderItemPostDtoList;
 
     }
@@ -40,8 +44,11 @@ public class OrderDto {
     @NoArgsConstructor
     @Builder
     public static class OrderPatchDto {
+
+        @NotNull
+        @Min(1)
         private Long id;
 
-        private List<OrderItemEntity> orderItems; // todo : OrderItemDto 로 변경해야함!!
+        private List<OrderItemDto.OrderItemPostDto> orderItems;
     }
 }
