@@ -24,7 +24,7 @@ jobs:
             host: ${{ secrets.PI_HOST }}
             username: ${{ secrets.PI_USERNAME }}
             key: ${{ secrets.PI_KEY }}
-            script: |                    
+            script:
               cd SpringProject/GongGuBox-Backend/
               echo $JAVA_HOME
 
