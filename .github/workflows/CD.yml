@@ -25,8 +25,6 @@ jobs:
             username: ${{ secrets.PI_USERNAME }}
             key: ${{ secrets.PI_KEY }}
             script: |                    
-              cd SpringProject/GongGuBox-Backend/
-              ls
+#              cd SpringProject/GongGuBox-Backend/
               echo $JAVA_HOME
-              java --version
-              ./gradlew clean build -x test
+
