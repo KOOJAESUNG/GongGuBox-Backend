@@ -7,7 +7,6 @@ import com.gonggubox.repository.admin.AdminRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class AdminService {
 
-    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
-    private String test;
-
     private final AdminRepository adminRepository;
 
     private final AdminMapper adminMapper;
@@ -29,7 +25,6 @@ public class AdminService {
 
     @Transactional
     public AdminDto.AdminResponseDto createAdmin(AdminDto.AdminPostDto adminPostDto) {
-        System.out.println(test);
         if(!adminRepository.existsByUsername(adminPostDto.getUsername())){
             adminPostDto.setPassword(bCryptPasswordEncoder.encode(adminPostDto.getPassword()));
             return adminMapper.toResponseDto(adminRepository.save(adminMapper.toEntity(adminPostDto)));
