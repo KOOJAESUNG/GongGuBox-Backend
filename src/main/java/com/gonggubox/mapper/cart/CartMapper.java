@@ -42,7 +42,7 @@ public abstract class CartMapper {
 
     @Named("cartItemEntityListToCartItemResponseDtoList")
     List<CartDto.CartItemResponseDto> cartItemEntityListToCartItemResponseDtoList(List<CartItemEntity> cartItemEntityList) {
-        if (cartItemEntityList == null) return null;
+        if (cartItemEntityList == null) return new ArrayList<>();
         List<CartDto.CartItemResponseDto> temp = new ArrayList<>();
         cartItemEntityList.forEach(o -> {
             temp.add(

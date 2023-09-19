@@ -56,7 +56,7 @@ public abstract class CategoryMapper {
 
     @Named("categoryNameListToCategoryEntityList")
     List<CategoryEntity> categoryNameListToCategoryEntityList(List<String> categoryNameList) {
-        if (categoryNameList == null) return null;
+        if (categoryNameList == null) return new ArrayList<>();
         List<CategoryEntity> temp = new ArrayList<>();
         categoryNameList.forEach(o -> temp.add(categoryNameToCategoryEntity(o)));
         return temp;

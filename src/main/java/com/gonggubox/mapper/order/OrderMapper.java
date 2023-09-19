@@ -37,7 +37,7 @@ public abstract class OrderMapper {
 
     @Named("orderItemPostDtoListToOrderItemEntityList")
     List<OrderItemEntity> orderItemPostDtoListToOrderItemEntityList(List<OrderItemDto.OrderItemPostDto> orderItemPostDtoList) {
-        if (orderItemPostDtoList == null) return null;
+        if (orderItemPostDtoList == null) return new ArrayList<>();
         List<OrderItemEntity> temp = new ArrayList<>();
         orderItemPostDtoList.forEach(o -> temp.add(orderItemMapper.toEntity(o)));
         return temp;
@@ -51,7 +51,7 @@ public abstract class OrderMapper {
 
     @Named("orderItemListToOrderItemResponseDtoList")
     List<OrderItemDto.OrderItemResponseDto> orderItemListToOrderItemResponseDtoList(List<OrderItemEntity> orderItems) {
-        if (orderItems == null) return null;
+        if (orderItems == null) return new ArrayList<>();
         List<OrderItemDto.OrderItemResponseDto> temp = new ArrayList<>();
         orderItems.forEach(o -> temp.add(orderItemMapper.toResponseDto(o)));
         return temp;

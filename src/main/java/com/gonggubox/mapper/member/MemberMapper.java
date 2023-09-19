@@ -38,7 +38,7 @@ public abstract class MemberMapper {
 
     @Named("groupIdListToGroupMemberEntityList")
     List<GroupMemberEntity> groupIdListToGroupMemberEntityList(List<Long> groupIdList) {
-        if (groupIdList == null) return null;
+        if (groupIdList == null) return new ArrayList<>();
         List<GroupMemberEntity> temp = new ArrayList<>();
         groupIdList.forEach(o -> {
             GroupMemberEntity groupMemberEntity = new GroupMemberEntity();
@@ -53,7 +53,7 @@ public abstract class MemberMapper {
 
     @Named("groupMemberListToGroupResponseDtoList")
     List<GroupDto.GroupResponseDto> groupMemberListToGroupResponseDtoList(List<GroupMemberEntity> groupMemberList) {
-        if (groupMemberList == null) return null;
+        if (groupMemberList == null) return new ArrayList<>();
         List<GroupDto.GroupResponseDto> temp = new ArrayList<>();
         groupMemberList.forEach(o ->
                 temp.add(

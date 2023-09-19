@@ -47,7 +47,7 @@ public abstract class GroupMapper {
 
     @Named("itemListToItemResponseDtoList")
     List<ItemDto.ItemResponseDto> itemListToItemResponseDtoList(List<ItemEntity> itemEntityList) {
-        if (itemEntityList == null) return null;
+        if (itemEntityList == null) return new ArrayList<>();
         List<ItemDto.ItemResponseDto> temp = new ArrayList<>();
         itemEntityList.forEach(o -> temp.add(itemMapper.toResponseDto(o)));
         return temp;
