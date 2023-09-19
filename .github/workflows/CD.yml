@@ -26,6 +26,7 @@ jobs:
             key: ${{ secrets.PI_KEY }}
             script: |
               cd SpringProject/GongGuBox-Backend/ 
+              sdk env
               java -version
               which java
 
