@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,6 @@ public class GroupEntity {
     private Address address; //그룹의 대표 주소
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ItemEntity> itemList; //Group이 삭제되면 Group에 속한 Item도 같이 삭제됨!!
+    private List<ItemEntity> itemList = new ArrayList<>(); //Group이 삭제되면 Group에 속한 Item도 같이 삭제됨!!
 
 }

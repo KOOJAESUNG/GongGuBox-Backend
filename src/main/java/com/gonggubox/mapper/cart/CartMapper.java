@@ -34,32 +34,38 @@ public abstract class CartMapper {
 
 
     @Mappings({
-            @Mapping(target = "totalPrice",expression = "java(this.getTotalPrice(cart.getCartItemList()))"),
+            @Mapping(target = "totalPrice", expression = "java(this.getTotalPrice(cart.getCartItemList()))"),
             @Mapping(source = "cartItemList", target = "cartItemList", qualifiedByName = "cartItemEntityListToCartItemResponseDtoList"),
             @Mapping(source = "member", target = "member", qualifiedByName = "memberEntityToMemberResponseDto")
     })
     public abstract CartDto.CartResponseDto toResponseDto(CartEntity cart);
+
     @Named("cartItemEntityListToCartItemResponseDtoList")
-    List<CartDto.CartItemResponseDto> cartItemEntityListToCartItemResponseDtoList(List<CartItemEntity> cartItemEntityList){
+    List<CartDto.CartItemResponseDto> cartItemEntityListToCartItemResponseDtoList(List<CartItemEntity> cartItemEntityList) {
+        if (cartItemEntityList == null) return null;
         List<CartDto.CartItemResponseDto> temp = new ArrayList<>();
-        cartItemEntityList.forEach(o->{
+        cartItemEntityList.forEach(o -> {
             temp.add(
                     CartDto.CartItemResponseDto.builder()
-                    .count(o.getCount())
-                    .item(itemMapper.toResponseDto(o.getItem()))
-                    .build()
-                    );
+                            .count(o.getCount())
+                            .item(itemMapper.toResponseDto(o.getItem()))
+                            .build()
+            );
         });
         return temp;
     }
+
     @Named("memberEntityToMemberResponseDto")
     MemberDto.MemberResponseDto memberEntityToMemberResponseDto(MemberEntity member) {
+        if (member == null) return null;
         return memberMapper.toResponseDto(member);
     }
-    Long getTotalPrice(List<CartItemEntity> cartItemList){
+
+    Long getTotalPrice(List<CartItemEntity> cartItemList) {
+        if (cartItemList == null) return null;
         long totalPrice = 0L;
         for (CartItemEntity cartItemEntity : cartItemList) {
-            totalPrice+=cartItemEntity.getItem().getPrice()* cartItemEntity.getCount();
+            totalPrice += cartItemEntity.getItem().getPrice() * cartItemEntity.getCount();
         }
         return totalPrice;
     }

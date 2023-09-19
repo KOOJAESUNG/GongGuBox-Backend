@@ -15,7 +15,7 @@ public class CategoryDto {
 
         private String name;
 
-        private String parentCategoryName;
+        private String parentCategoryName; //null 이 아니라면 해당하는 부모 카테고리 아래에 카테고리를 생성
 
 //        private List<CategoryEntity> childCategoryName; //상위 카테고리만 알면 될듯??
 

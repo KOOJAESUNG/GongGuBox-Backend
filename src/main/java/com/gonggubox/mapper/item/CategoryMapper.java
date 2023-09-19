@@ -22,14 +22,15 @@ public abstract class CategoryMapper {
 
 
     @Mappings({
-            @Mapping(target = "id",ignore = true),
+            @Mapping(target = "id", ignore = true),
             @Mapping(target = "child", ignore = true),
             @Mapping(source = "parentCategoryName", target = "parent", qualifiedByName = "categoryNameToCategoryEntity")
     })
     public abstract CategoryEntity toEntity(CategoryDto.CategoryPostDto categoryPostDto);
+
     @Named("categoryNameToCategoryEntity")
     CategoryEntity categoryNameToCategoryEntity(String categoryName) {
-        if(categoryName==null) return null;
+        if (categoryName == null) return null;
         return categoryRepository.findByName(categoryName).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -39,22 +40,25 @@ public abstract class CategoryMapper {
             @Mapping(target = "child", expression = "java(toIdNameDtoList(categoryEntity.getChild()))")
     })
     public abstract CategoryDto.CategoryResponseDto toResponseDto(CategoryEntity categoryEntity);
+
     abstract CategoryDto.CategoryIdNameDto toIdNameDto(CategoryEntity categoryEntity);
+
     abstract List<CategoryDto.CategoryIdNameDto> toIdNameDtoList(List<CategoryEntity> categoryEntityList);
 
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(source = "parentCategoryName",target = "parent", qualifiedByName = "categoryNameToCategoryEntity"),
-            @Mapping(source = "childCategoryNameList",target = "child", qualifiedByName = "categoryNameListToCategoryEntityList")
+            @Mapping(source = "parentCategoryName", target = "parent", qualifiedByName = "categoryNameToCategoryEntity"),
+            @Mapping(source = "childCategoryNameList", target = "child", qualifiedByName = "categoryNameListToCategoryEntityList")
     })
     public abstract void updateFromPatchDto(CategoryDto.CategoryPatchDto CategoryPatchDto, @MappingTarget CategoryEntity categoryEntity);
+
     @Named("categoryNameListToCategoryEntityList")
     List<CategoryEntity> categoryNameListToCategoryEntityList(List<String> categoryNameList) {
-        if(categoryNameList==null) return null;
+        if (categoryNameList == null) return null;
         List<CategoryEntity> temp = new ArrayList<>();
-        categoryNameList.forEach(o->temp.add(categoryNameToCategoryEntity(o)));
+        categoryNameList.forEach(o -> temp.add(categoryNameToCategoryEntity(o)));
         return temp;
     }
 

@@ -33,6 +33,7 @@ public abstract class EventMapper {
 
     @Named("adminEntityToAdminResponseDto")
     AdminDto.AdminResponseDto adminEntityToAdminResponseDto(AdminEntity admin) {
+        if(admin == null) return null;
         return adminMapper.toResponseDto(admin);
     }
 

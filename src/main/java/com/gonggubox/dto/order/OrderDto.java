@@ -42,6 +42,6 @@ public class OrderDto {
     public static class OrderPatchDto {
         private Long id;
 
-        private List<OrderItemEntity> orderItems;
+        private List<OrderItemEntity> orderItems; // todo : OrderItemDto 로 변경해야함!!
     }
 }

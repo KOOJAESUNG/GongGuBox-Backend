@@ -18,20 +18,21 @@ public abstract class NoticeMapper {
     private AdminMapper adminMapper;
 
     @Mappings({
-            @Mapping(target = "id",ignore = true),
-            @Mapping(target = "createAt",ignore = true),
-            @Mapping(target = "modifiedAt",ignore = true),
-            @Mapping(target = "imageUrlList",ignore = true),
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "createAt", ignore = true),
+            @Mapping(target = "modifiedAt", ignore = true),
+            @Mapping(target = "imageUrlList", ignore = true),
             @Mapping(source = "admin", target = "admin")
     })
     public abstract NoticeEntity toEntity(NoticeDto.NoticePostDto NoticePostDto, AdminEntity admin);
 
 
-
     @Mapping(source = "admin", target = "admin", qualifiedByName = "adminEntityToAdminResponseDto")
     public abstract NoticeDto.NoticeResponseDto toResponseDto(NoticeEntity NoticeEntity);
+
     @Named("adminEntityToAdminResponseDto")
     AdminDto.AdminResponseDto adminEntityToAdminResponseDto(AdminEntity admin) {
+        if (admin == null) return null;
         return adminMapper.toResponseDto(admin);
     }
 
@@ -39,10 +40,10 @@ public abstract class NoticeMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "createAt",ignore = true),
-            @Mapping(target = "modifiedAt",ignore = true),
-            @Mapping(target = "imageUrlList",ignore = true),
-            @Mapping(target = "admin",ignore = true),
+            @Mapping(target = "createAt", ignore = true),
+            @Mapping(target = "modifiedAt", ignore = true),
+            @Mapping(target = "imageUrlList", ignore = true),
+            @Mapping(target = "admin", ignore = true),
     })
     public abstract void updateFromPatchDto(NoticeDto.NoticePatchDto NoticePatchDto, @MappingTarget NoticeEntity NoticeEntity);
 

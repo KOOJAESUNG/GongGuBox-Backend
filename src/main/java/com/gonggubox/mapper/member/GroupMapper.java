@@ -22,11 +22,10 @@ public abstract class GroupMapper {
     private ItemMapper itemMapper;
 
     @Mappings({
-            @Mapping(target = "id",ignore = true),
-            @Mapping(target = "itemList",ignore = true)
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "itemList", ignore = true)
     })
     public abstract GroupEntity toEntity(GroupDto.GroupPostDto GroupPostDto);
-
 
 
     public abstract GroupDto.GroupResponseDto toResponseDto(GroupEntity GroupEntity);
@@ -42,15 +41,18 @@ public abstract class GroupMapper {
     @Mappings({
             @Mapping(source = "id", target = "groupId"),
             @Mapping(source = "name", target = "groupName"),
-            @Mapping(source = "itemList", target = "itemList",qualifiedByName = "itemListToItemResponseDtoList")
+            @Mapping(source = "itemList", target = "itemList", qualifiedByName = "itemListToItemResponseDtoList")
     })
     public abstract GroupDto.GroupItemResponseDto toGroupItemResponseDto(GroupEntity group);
 
     @Named("itemListToItemResponseDtoList")
-    List<ItemDto.ItemResponseDto> itemListToItemResponseDtoList(List<ItemEntity> itemEntityList){
+    List<ItemDto.ItemResponseDto> itemListToItemResponseDtoList(List<ItemEntity> itemEntityList) {
+        if (itemEntityList == null) return null;
         List<ItemDto.ItemResponseDto> temp = new ArrayList<>();
-        itemEntityList.forEach(o->temp.add(itemMapper.toResponseDto(o)));
+        itemEntityList.forEach(o -> temp.add(itemMapper.toResponseDto(o)));
         return temp;
-    };
+    }
+
+    ;
 
 }

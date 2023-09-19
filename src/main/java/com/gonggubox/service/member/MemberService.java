@@ -1,5 +1,6 @@
 package com.gonggubox.service.member;
 
+import com.gonggubox.domain.member.MemberEntity;
 import com.gonggubox.dto.member.MemberDto;
 import com.gonggubox.mapper.member.MemberMapper;
 import com.gonggubox.repository.member.MemberRepository;
@@ -24,8 +25,12 @@ public class MemberService {
 
     @Transactional
     public MemberDto.MemberResponseDto createMember(MemberDto.MemberPostDto memberPostDto) {
-        memberPostDto.setPassword(bCryptPasswordEncoder.encode(memberPostDto.getPassword()));
-        return memberMapper.toResponseDto(memberRepository.save(memberMapper.toEntity(memberPostDto)));
+        if(!memberRepository.existsByUsername(memberPostDto.getUsername())){
+            memberPostDto.setPassword(bCryptPasswordEncoder.encode(memberPostDto.getPassword()));
+            MemberEntity member = memberMapper.toEntity(memberPostDto);
+            member.setMemberInGroupMemberList();
+            return memberMapper.toResponseDto(memberRepository.save(member));
+        } else throw new RuntimeException("createMember : 이미 존재하는 username 입니다!!!");
     }
 
     public MemberDto.MemberResponseDto getMemberById(Long memberId) {

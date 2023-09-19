@@ -1,9 +1,7 @@
 package com.gonggubox.dto.member;
 
 import com.gonggubox.constant.MemberClass;
-import com.gonggubox.domain.cart.CartItemEntity;
-import com.gonggubox.domain.member.GroupMemberEntity;
-import com.gonggubox.domain.order.OrderEntity;
+import com.gonggubox.dto.order.OrderDto;
 import lombok.*;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public class MemberDto {
 
         private String phoneNumber;
 
-        private List<GroupMemberEntity> groupMemberList;
+        private List<Long> groupIdList;
 
     }
 
@@ -44,20 +42,10 @@ public class MemberDto {
 
         private MemberClass memberClass;
 
-        private List<GroupMemberEntity> groupMemberList; //todo : 변경 요망
+        private List<GroupDto.GroupResponseDto> groupList;
 
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class MemberCartResponseDto {
-
-        private List<CartItemEntity> cartItemList;
-
-    }
 
     @Getter
     @Setter
@@ -66,7 +54,7 @@ public class MemberDto {
     @Builder
     public static class MemberOrderResponseDto {
 
-        private List<OrderEntity> orderList;
+        private List<OrderDto.OrderResponseDto> orderList; //todo : orderservice or memberservice??
     }
 
     @Getter
@@ -84,10 +72,9 @@ public class MemberDto {
 
         private String phoneNumber;
 
-
         private MemberClass memberClass;
 
-        private List<GroupMemberEntity> groupMemberList;
+        private List<Long> groupIdList;
 
     }
 }

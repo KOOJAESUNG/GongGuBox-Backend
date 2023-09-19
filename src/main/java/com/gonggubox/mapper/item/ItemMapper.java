@@ -31,6 +31,7 @@ public abstract class ItemMapper {
 
     @Named("groupIdToGroup")
     GroupEntity groupIdToGroup(Long groupId) {
+        if (groupId == null) return null;
         return groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
     }
 

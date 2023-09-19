@@ -26,17 +26,21 @@ public abstract class OrderItemMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(source = "itemId",target = "item", qualifiedByName = "itemIdToItemEntity"),
+            @Mapping(source = "itemId", target = "item", qualifiedByName = "itemIdToItemEntity"),
             @Mapping(source = "itemId", target = "orderPrice", qualifiedByName = "itemIdToPrice"),
             @Mapping(target = "order", ignore = true)
     })
     public abstract OrderItemEntity toEntity(OrderItemDto.OrderItemPostDto orderItemPostDto);
+
     @Named("itemIdToPrice")
     Long itemIdToPrice(Long itemId) {
+        if (itemId == null) return null;
         return itemRepository.getPriceById(itemId).orElseThrow(EntityNotFoundException::new);
     }
+
     @Named("itemIdToItemEntity")
     ItemEntity itemIdToItemEntity(Long itemId) {
+        if (itemId == null) return null;
         return itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -45,8 +49,10 @@ public abstract class OrderItemMapper {
             @Mapping(source = "item", target = "itemResponseDto", qualifiedByName = "itemEntityToItemResponseDto")
     })
     public abstract OrderItemDto.OrderItemResponseDto toResponseDto(OrderItemEntity orderItem);
+
     @Named("itemEntityToItemResponseDto")
     ItemDto.ItemResponseDto itemEntityToItemResponseDto(ItemEntity item) {
+        if (item == null) return null;
         return itemMapper.toResponseDto(item);
     }
 //

@@ -55,7 +55,7 @@ public class ItemEntity extends TimeStamp {
 
 
     @OneToMany(mappedBy = "item")
-    private List<OrderItemEntity> orderItem; //개수를 충족했는지 확인하기 위해 필요
+    private List<OrderItemEntity> orderItem = new ArrayList<>(); //개수를 충족했는지 확인하기 위해 필요
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")

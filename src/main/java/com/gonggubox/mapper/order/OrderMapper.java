@@ -30,14 +30,16 @@ public abstract class OrderMapper {
             @Mapping(target = "createAt", ignore = true),
             @Mapping(target = "modifiedAt", ignore = true),
             @Mapping(target = "totalPrice", ignore = true), //todo : 구현
-            @Mapping(source = "orderPostDto.orderItemPostDtoList",target = "orderItems", qualifiedByName = "orderItemPostDtoListToOrderItemEntityList"),
+            @Mapping(source = "orderPostDto.orderItemPostDtoList", target = "orderItems", qualifiedByName = "orderItemPostDtoListToOrderItemEntityList"),
             @Mapping(source = "member", target = "member")
     })
     public abstract OrderEntity toEntity(OrderDto.OrderPostDto orderPostDto, MemberEntity member);
+
     @Named("orderItemPostDtoListToOrderItemEntityList")
     List<OrderItemEntity> orderItemPostDtoListToOrderItemEntityList(List<OrderItemDto.OrderItemPostDto> orderItemPostDtoList) {
+        if (orderItemPostDtoList == null) return null;
         List<OrderItemEntity> temp = new ArrayList<>();
-        orderItemPostDtoList.forEach(o->temp.add(orderItemMapper.toEntity(o)));
+        orderItemPostDtoList.forEach(o -> temp.add(orderItemMapper.toEntity(o)));
         return temp;
     }
 
@@ -46,10 +48,12 @@ public abstract class OrderMapper {
             @Mapping(source = "orderItems", target = "orderItemResponseDtoList", qualifiedByName = "orderItemListToOrderItemResponseDtoList"),
     })
     public abstract OrderDto.OrderResponseDto toResponseDto(OrderEntity orderEntity);
+
     @Named("orderItemListToOrderItemResponseDtoList")
     List<OrderItemDto.OrderItemResponseDto> orderItemListToOrderItemResponseDtoList(List<OrderItemEntity> orderItems) {
+        if (orderItems == null) return null;
         List<OrderItemDto.OrderItemResponseDto> temp = new ArrayList<>();
-        orderItems.forEach(o->temp.add(orderItemMapper.toResponseDto(o)));
+        orderItems.forEach(o -> temp.add(orderItemMapper.toResponseDto(o)));
         return temp;
     }
 

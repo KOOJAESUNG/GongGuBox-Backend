@@ -50,4 +50,8 @@ public class MemberEntity extends TimeStamp implements UserEntity {
 
     @OneToMany(mappedBy = "member")
     private List<OrderEntity> orderList = new ArrayList<>();
+
+    public void setMemberInGroupMemberList() {
+        groupMemberList.forEach(o->o.setMember(this));
+    }
 }
