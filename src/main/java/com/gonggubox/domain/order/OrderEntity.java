@@ -36,6 +36,7 @@ public class OrderEntity extends TimeStamp {
     private Long totalPrice; //주문의 총 금액
 
     @UniqueElements
+    @NotNull
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItemEntity> orderItems = new ArrayList<>();
 
