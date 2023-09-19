@@ -2,6 +2,8 @@
 
 ./off
 
+rm nohup.out
+
 BUILD_JAR=$(ls ./build/libs/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
