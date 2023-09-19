@@ -4,8 +4,11 @@ package com.gonggubox.domain.order;
 import com.gonggubox.domain.TimeStamp;
 import com.gonggubox.domain.member.MemberEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +26,16 @@ public class OrderEntity extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
+    @NotNull
+    @Min(1)
     private Long totalPrice; //주문의 총 금액
 
+    @UniqueElements
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItemEntity> orderItems = new ArrayList<>();
 

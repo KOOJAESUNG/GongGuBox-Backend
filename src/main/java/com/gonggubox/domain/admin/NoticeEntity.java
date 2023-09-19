@@ -4,6 +4,8 @@ package com.gonggubox.domain.admin;
 import com.gonggubox.constant.NoticeType;
 import com.gonggubox.domain.TimeStamp;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,8 @@ public class NoticeEntity extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @NotBlank
     private String title; //공지사항의 제목
 
     @Lob
@@ -40,6 +44,7 @@ public class NoticeEntity extends TimeStamp {
     @Column(name = "image_url")
     private List<String> imageUrlList = new ArrayList<>(); //공지사항의 이미지 부분
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     private AdminEntity admin;

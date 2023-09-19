@@ -2,6 +2,8 @@ package com.gonggubox.domain.order;
 
 import com.gonggubox.domain.item.ItemEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,16 +20,22 @@ public class OrderItemEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private ItemEntity item;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
+    @NotNull
+    @Min(1)
     private Long orderPrice; //주문 당시의 상품 가격
 
+    @NotNull
+    @Min(1)
     private int count; //주문한 상품의 개수
 
 }

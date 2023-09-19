@@ -1,6 +1,8 @@
 package com.gonggubox.domain.item;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +22,8 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @NotBlank
     private String name; //카테고리의 이름 ex) 생필품, 전자기기 등
 
     @ManyToOne(fetch = FetchType.LAZY)

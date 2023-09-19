@@ -3,6 +3,7 @@ package com.gonggubox.domain.cart;
 import com.gonggubox.domain.item.ItemEntity;
 import com.gonggubox.domain.member.MemberEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class CartEntity {
 
 //    private Long totalPrice; //가격이 변동될 수 있기 때문에 그떄그때 가져오는게 나을듯
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity member;

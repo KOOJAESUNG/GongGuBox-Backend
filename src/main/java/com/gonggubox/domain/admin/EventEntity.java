@@ -3,6 +3,8 @@ package com.gonggubox.domain.admin;
 import com.gonggubox.constant.EventType;
 import com.gonggubox.domain.TimeStamp;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,8 @@ public class EventEntity extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @NotBlank
     private String title; //이벤트의 제목
 
     @Lob
@@ -40,6 +44,7 @@ public class EventEntity extends TimeStamp {
     @Column(name = "image_url")
     private List<String> imageUrlList = new ArrayList<>(); // 이벤트의 이미지
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     private AdminEntity admin;
