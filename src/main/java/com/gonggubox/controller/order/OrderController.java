@@ -19,7 +19,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/createOrder")
-    public ResponseEntity<?> createOrder(@AuthenticationPrincipal PrincipalDetails principalDetails, @Valid OrderDto.OrderPostDto orderPostDto) {
+    public ResponseEntity<?> createOrder(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody @Valid OrderDto.OrderPostDto orderPostDto) {
         return ResponseEntity.ok().body(orderService.createOrder(principalDetails.getUser().getId(), orderPostDto));
     }
 
