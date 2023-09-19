@@ -30,4 +30,5 @@ jobs:
               cd SpringProject/GongGuBox-Backend/ 
               pwd
               java -version
+              $JAVA_HOME
 
