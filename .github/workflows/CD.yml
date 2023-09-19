@@ -27,5 +27,6 @@ jobs:
             script: |                    
               cd SpringProject/GongGuBox-Backend/
               ls
+              echo $JAVA_HOME
               java --version
               ./gradlew clean build -x test
