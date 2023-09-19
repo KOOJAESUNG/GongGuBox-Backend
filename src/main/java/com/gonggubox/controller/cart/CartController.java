@@ -2,6 +2,8 @@ package com.gonggubox.controller.cart;
 
 import com.gonggubox.config.spring_security.auth.PrincipalDetails;
 import com.gonggubox.service.cart.CartService;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,17 +22,17 @@ public class CartController {
     }
 
     @PostMapping("/addItemToCart")
-    public ResponseEntity<?> addItemToCart(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Long itemId, @RequestParam Integer count) {
+    public ResponseEntity<?> addItemToCart(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam @NotNull @Min(1) Long itemId, @RequestParam @NotNull @Min(1) Integer count) {
         return ResponseEntity.ok().body(cartService.addItemToCart(principalDetails.getUser().getId(), itemId, count));
     }
 
     @DeleteMapping("/deleteItemInCart")
-    public ResponseEntity<?> deleteItemInCart(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Long itemId) {
+    public ResponseEntity<?> deleteItemInCart(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam @NotNull @Min(1) Long itemId) {
         return ResponseEntity.ok().body(cartService.deleteItemInCart(principalDetails.getUser().getId(), itemId));
     }
 
     @PatchMapping("/updateItemCountInCart")
-    public ResponseEntity<?> updateItemCountInCart(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Long itemId, @RequestParam Integer count) {
+    public ResponseEntity<?> updateItemCountInCart(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam @NotNull @Min(1) Long itemId, @RequestParam @NotNull @Min(1) Integer count) {
         return ResponseEntity.ok().body(cartService.updateItemCountInCart(principalDetails.getUser().getId(), itemId, count));
     }
 

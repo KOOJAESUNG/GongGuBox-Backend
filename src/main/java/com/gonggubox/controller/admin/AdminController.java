@@ -3,6 +3,7 @@ package com.gonggubox.controller.admin;
 import com.gonggubox.config.spring_security.auth.PrincipalDetails;
 import com.gonggubox.dto.admin.AdminDto;
 import com.gonggubox.service.admin.AdminService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +17,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/createAdmin")
-    public ResponseEntity<?> createAdmin(@RequestBody AdminDto.AdminPostDto adminPostDto) {
+    public ResponseEntity<?> createAdmin(@RequestBody @Valid AdminDto.AdminPostDto adminPostDto) {
         return ResponseEntity.ok().body(adminService.createAdmin(adminPostDto));
     }
 
@@ -26,7 +27,7 @@ public class AdminController {
     }
 
     @PatchMapping("/updateAdmin")
-    public ResponseEntity<?> updateAdmin(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody AdminDto.AdminPatchDto adminPatchDto) {
+    public ResponseEntity<?> updateAdmin(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody @Valid AdminDto.AdminPatchDto adminPatchDto) {
         return ResponseEntity.ok().body(adminService.updateAdmin(principalDetails.getUser().getId(), adminPatchDto));
     }
 

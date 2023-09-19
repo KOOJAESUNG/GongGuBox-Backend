@@ -3,6 +3,8 @@ package com.gonggubox.controller.member;
 import com.gonggubox.config.spring_security.auth.PrincipalDetails;
 import com.gonggubox.dto.member.MemberDto;
 import com.gonggubox.service.member.MemberService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +18,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/createMember")
-    public ResponseEntity<?> createMember(MemberDto.MemberPostDto memberPostDto) {
+    public ResponseEntity<?> createMember(@Valid MemberDto.MemberPostDto memberPostDto) {
         return ResponseEntity.ok().body(memberService.createMember(memberPostDto));
     }
 
@@ -26,12 +28,12 @@ public class MemberController {
     }
 
     @GetMapping("/getMemberByEmail")
-    public ResponseEntity<?> getMemberByEmail(@RequestParam String email) {
+    public ResponseEntity<?> getMemberByEmail(@RequestParam @NotBlank String email) {
         return ResponseEntity.ok().body(memberService.getMemberByEmail(email));
     }
 
     @PatchMapping("/updateMember")
-    public ResponseEntity<?> updateMember(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody MemberDto.MemberPatchDto memberPatchDto) {
+    public ResponseEntity<?> updateMember(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody @Valid MemberDto.MemberPatchDto memberPatchDto) {
         return ResponseEntity.ok().body(memberService.updateMember(principalDetails.getUser().getId(), memberPatchDto));
     }
 
