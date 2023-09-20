@@ -14,3 +14,4 @@ else
   kill -9 $CURRENT_PID
   sleep 1
 fi
+

@@ -27,9 +27,9 @@ jobs:
             script_stop: true
             script: |
               cd SpringProject/GongGuBox-Backend/ 
-              sudo ./off
+              ./off
               git pull
               ./gradlew build -x test
-              sudo ./reboot
+              ./reboot
               
 
