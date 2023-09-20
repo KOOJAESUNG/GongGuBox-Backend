@@ -58,14 +58,32 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberDto.MemberResponseDto createMember(MemberDto.MemberPostDto memberPostDto) {
-        if(!memberRepository.existsByUsername(memberPostDto.getUsername())){
-            memberPostDto.setPassword(bCryptPasswordEncoder.encode(memberPostDto.getPassword()));
-            MemberEntity member = memberMapper.toEntity(memberPostDto);
-            member.setMemberInGroupMemberList();
-            return memberMapper.toResponseDto(memberRepository.save(member));
-        } else throw new RuntimeException("createMember : 이미 존재하는 username 입니다!!!");
+    public String login(String username, String password){
+        // userName 없음
+        MemberEntity selectedMember = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, username + "이 없습니다."));
+
+        // password 틀림
+        log.info("selectedPw: {} pw: {}", selectedMember.getPassword(), password);
+        if(!bCryptPasswordEncoder.matches(password, selectedMember.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드를 잘못 입력 했습니다.");
+        }
+
+        String token = JwtTokenUtil.createToken(selectedMember.getUsername(), key, expireTimeMs);
+
+        //앞에서 Exceptionn 안났으면 token 발행
+        return token;
     }
+
+//    @Transactional
+//    public MemberDto.MemberResponseDto createMember(MemberDto.MemberPostDto memberPostDto) {
+//        if(!memberRepository.existsByUsername(memberPostDto.getUsername())){
+//            memberPostDto.setPassword(bCryptPasswordEncoder.encode(memberPostDto.getPassword()));
+//            MemberEntity member = memberMapper.toEntity(memberPostDto);
+//            member.setMemberInGroupMemberList();
+//            return memberMapper.toResponseDto(memberRepository.save(member));
+//        } else throw new RuntimeException("createMember : 이미 존재하는 username 입니다!!!");
+//    }
 
     public MemberDto.MemberResponseDto getMemberById(Long memberId) {
         return memberMapper.toResponseDto(memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new));

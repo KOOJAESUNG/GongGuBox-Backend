@@ -45,6 +45,24 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
+    public static class MemberLoginDto {
+
+        //비밀번호 정규식. 8~15자 영문, 숫자, 특수문자 조합으로 이뤄져야한다.
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$",
+                message = "비밀번호는 8~15자 영문, 숫자, 특수문자 조합이어야 합니다.")
+        private String password;
+
+        @NotBlank(message = "아이디를 작성해주세요.")
+        private String username; //로그인 아이디
+
+
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
     public static class MemberPostDto {
 
         @NotNull

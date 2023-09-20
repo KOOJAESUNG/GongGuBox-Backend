@@ -24,10 +24,21 @@ public class MemberController {
         return ResponseEntity.ok().body("회원가입이 성공 했습니다.");
     }
 
-    @PostMapping("/createMember")
-    public ResponseEntity<?> createMember(@RequestBody @Valid MemberDto.MemberPostDto memberPostDto) {
-        return ResponseEntity.ok().body(memberService.createMember(memberPostDto));
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody MemberDto.MemberLoginDto memberLoginDto) {
+
+        String token = memberService.login(memberLoginDto.getUsername(), memberLoginDto.getPassword());
+        return ResponseEntity.ok().body(token);
+
+        //return ResponseEntity.ok().body(memberService.login(memberLoginDto.getUsername(),"" ));
     }
+
+
+
+//    @PostMapping("/createMember")
+//    public ResponseEntity<?> createMember(@RequestBody @Valid MemberDto.MemberPostDto memberPostDto) {
+//        return ResponseEntity.ok().body(memberService.createMember(memberPostDto));
+//    }
 
     @GetMapping("/getMemberById")
     public ResponseEntity<?> getMemberById(@AuthenticationPrincipal PrincipalDetails principalDetails) {
