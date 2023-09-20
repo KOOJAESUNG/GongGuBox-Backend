@@ -1,13 +1,13 @@
-//package com.gonggubox.repository.admin;
-//
-//
-//import com.gonggubox.domain.admin.AdminEntity;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//
-//public interface AdminRepository extends JpaRepository<AdminEntity,Long> {
-//
-//    Boolean existsByUsername(String username);
-//
-//    AdminEntity findByUsername(String username);
-//
-//}
+package com.gonggubox.repository.admin;
+
+
+import com.gonggubox.domain.admin.AdminEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AdminRepository extends JpaRepository<AdminEntity,Long> {
+
+    Boolean existsByUsername(String username);
+
+    AdminEntity findByUsername(String username);
+
+}
