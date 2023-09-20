@@ -30,6 +30,6 @@ jobs:
               cat ./reboot
               ./off
               git pull
-#              ./gradlew build -x test
-#              ./reboot
+              ./gradlew build -x test
+              ./reboot
 
