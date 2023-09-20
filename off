@@ -1,17 +1,17 @@
 #!/bin/bash
 BUILD_JAR=$(ls ./build/libs/*.jar)
-JAR_NAME=$(basename $BUILD_JAR)
+JAR_NAME=$(basename $BUILD_JAR) #~~~.jar 파일
 echo "> build 파일명: $JAR_NAME"
 
 echo "> 현재 실행중인 애플리케이션 pid 확인"
-CURRENT_PID=$(pgrep -f $JAR_NAME)
+CURRENT_PID=$(pgrep -f $JAR_NAME) #lsof 대신 사용할 수 있음. 프로그램이 실행중인 pid를 리턴!!
 
-if [ -z $CURRENT_PID ]
+if [ -z $CURRENT_PID ] # -z 는 문자열이 비어있는지 확인하는 조건문. 즉, 리턴된 pid가 없다면
 then
   echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
-else
+else #리턴된 pid가 있다면
   echo "> kill -9 $CURRENT_PID"
-  kill -9 $CURRENT_PID
+  kill -9 $CURRENT_PID #해당 프로세스 강제종료! kill -15는 정상종료, kill -9은 강제종료임
   sleep 1
 fi
 

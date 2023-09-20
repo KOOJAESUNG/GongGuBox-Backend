@@ -11,20 +11,14 @@ jobs:
 
 
     steps:
-#      - uses: actions/checkout@v3
-#      - name: Set up JDK 20
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '20'
-#          distribution: 'adopt'
 
       - name: Deploy to Server
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@master #ssh 연결을 위한 action
         with:
             host: ${{ secrets.PI_HOST }}
             username: ${{ secrets.PI_USERNAME }}
             key: ${{ secrets.PI_KEY }}
-            script_stop: true
+            script_stop: true #스크립트 실행중 오류 발생시 중단
             script: |
               cd SpringProject/GongGuBox-Backend/ 
               git pull

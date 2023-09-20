@@ -1,20 +1,20 @@
 #!/bin/bash
 
 BUILD_JAR=$(ls ./build/libs/*.jar)
-JAR_NAME=$(basename $BUILD_JAR)
+JAR_NAME=$(basename $BUILD_JAR) # ~~~.jar 파일
 
-cp ./build/libs/$JAR_NAME ./build/libs/temp
-./gradlew build -x test
-if [ $? -eq 0 ];then
+cp ./build/libs/$JAR_NAME ./build/libs/temp  #빌드 실패시 롤백을 위한 복사본 생성
+./gradlew build -x test   #빌드
+if [ $? -eq 0 ];then  #만약 빌드에 성공했다면
   echo "build success!!"
-  rm ./build/libs/temp
-  exit 0
-else
+  rm ./build/libs/temp  #복사본 삭제
+  exit 0  # exit. 0은 성공했다는 의미임!
+else  #만약 빌드에 실패했다면
   echo "build failed!!"
-  rm ./build/libs/$JAR_NAME
-  cp ./build/libs/temp ./build/libs/$JAR_NAME
-  rm ./build/libs/temp
-  exit 1
+  rm ./build/libs/$JAR_NAME  # ~~~.jar 파일 삭제
+  cp ./build/libs/temp ./build/libs/$JAR_NAME  #복사본을 통한 롤백 수행
+  rm ./build/libs/temp  #복사본 삭제
+  exit 1 #exit. 1은 실패했다는 의미임!
 fi
 
 

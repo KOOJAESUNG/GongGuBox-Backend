@@ -5,9 +5,9 @@
 rm nohup.out
 
 BUILD_JAR=$(ls ./build/libs/*.jar)
-JAR_NAME=$(basename $BUILD_JAR)
+JAR_NAME=$(basename $BUILD_JAR) # ~~~.jar 파일
 
 #nohup java -jar ./build/libs/$JAR_NAME &
-mkdir -p nohup
-rm ./nohup/*.txt
-nohup java -jar ./build/libs/$JAR_NAME 1>nohup/stdout.txt 2>nohup/stderr.txt &
+mkdir -p nohup #nohup 디렉터리가 없다면 생성
+rm ./nohup/*.txt #nohup 디렉터리 안에 있는 txt파일 삭제
+nohup java -jar ./build/libs/$JAR_NAME 1>nohup/stdout.txt 2>nohup/stderr.txt & #백그라운드에서 프로젝트 실행. 로그는 stdout.txt, 에러는 stderr.txt에 기록된다.
