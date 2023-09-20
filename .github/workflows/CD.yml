@@ -24,8 +24,11 @@ jobs:
             host: ${{ secrets.PI_HOST }}
             username: ${{ secrets.PI_USERNAME }}
             key: ${{ secrets.PI_KEY }}
+            script_stop: true
             script: |
               cd SpringProject/GongGuBox-Backend/ 
-              java -version
-              which java
+              ./off
+              git pull
+              ./gradlew build -x test
+              ./reboot
 
