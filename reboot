@@ -7,4 +7,5 @@ rm nohup.out
 BUILD_JAR=$(ls ./build/libs/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
-nohup java -jar ./build/libs/$JAR_NAME &
+#nohup java -jar ./build/libs/$JAR_NAME &
+nohup java -jar ./build/libs/$JAR_NAME 1>nohup/stdout.txt 2>nohup/stderr.txt &
