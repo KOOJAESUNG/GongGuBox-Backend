@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class MemberEntity extends TimeStamp implements UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
     @NotNull
     @NotBlank
     private String password; //비밀번호
@@ -40,14 +42,14 @@ public class MemberEntity extends TimeStamp implements UserEntity {
     @Column(unique = true)
     private String username; //로그인 아이디
 
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank  소셜로그인 구현시 null 될 수 있음
     @Email
     @Column(unique = true)
     private String email;
 
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Pattern(regexp = "^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$",
             message = "휴대폰 번호를 정확하게 입력해주세요.")
     @Column(unique = true)

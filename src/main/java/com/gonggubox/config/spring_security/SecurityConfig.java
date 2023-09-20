@@ -44,8 +44,8 @@ public class SecurityConfig {
 
                         .requestMatchers("/members/join", "/members/login", "/members/login/kakao").permitAll() //authorization 항상 null
                         .requestMatchers("/oauth2/code/**").permitAll()
-                                .anyRequest().permitAll()
-                       // .requestMatchers(HttpMethod.POST, "/**").authenticated() //나머지 post 인증 필요
+                        .requestMatchers(HttpMethod.POST, "/**").authenticated() //나머지 post 인증 필요
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
