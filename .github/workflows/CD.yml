@@ -27,7 +27,6 @@ jobs:
             script_stop: true
             script: |
               cd SpringProject/GongGuBox-Backend/ 
-              ./off
               git pull
               ./buildxtest
               ./reboot
