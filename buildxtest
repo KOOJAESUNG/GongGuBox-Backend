@@ -1,0 +1,20 @@
+#!/bin/bash
+
+BUILD_JAR=$(ls ./build/libs/*.jar)
+JAR_NAME=$(basename $BUILD_JAR)
+
+cp ./build/libs/$JAR_NAME ./build/libs/temp
+./gradlew build -x test
+if [ $? -eq 0 ];then
+  echo "build success!!"
+  rm ./build/libs/temp
+  exit 0
+else
+  echo "build failed!!"
+  rm ./build/libs/$JAR_NAME
+  cp ./build/libs/temp ./build/libs/$JAR_NAME
+  exit 1
+fi
+
+
+
