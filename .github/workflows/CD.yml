@@ -24,31 +24,12 @@ jobs:
             host: ${{ secrets.PI_HOST }}
             username: ${{ secrets.PI_USERNAME }}
             key: ${{ secrets.PI_KEY }}
-#            script_stop: true
+            script_stop: true
             script: |
               cd SpringProject/GongGuBox-Backend/ 
-              
-              BUILD_JAR=$(ls ./build/libs/*.jar)
-              JAR_NAME=$(basename $BUILD_JAR)
-              
-              echo "> build 파일명: $JAR_NAME"
-                
-              echo "> 현재 실행중인 애플리케이션 pid 확인"
-              CURRENT_PID=$(pgrep -f $JAR_NAME)
-                
-              if [ -z $CURRENT_PID ]
-              then
-                echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
-              else
-                echo "> kill -9 $CURRENT_PID"
-                kill -9 $CURRENT_PID
-                sleep 1
-              fi
-              
+              ./off
               git pull
-              
               ./gradlew build -x test
-              
-              nohup java -jar ./build/libs/$JAR_NAME 1>nohup/stdout.txt 2>nohup/stderr.txt &
+              ./reboot
               
 
