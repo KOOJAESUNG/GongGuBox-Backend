@@ -17,6 +17,13 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody MemberDto.MemberJoinDto memberJoinDto) {
+
+        memberService.join(memberJoinDto);
+        return ResponseEntity.ok().body("회원가입이 성공 했습니다.");
+    }
+
     @PostMapping("/createMember")
     public ResponseEntity<?> createMember(@RequestBody @Valid MemberDto.MemberPostDto memberPostDto) {
         return ResponseEntity.ok().body(memberService.createMember(memberPostDto));

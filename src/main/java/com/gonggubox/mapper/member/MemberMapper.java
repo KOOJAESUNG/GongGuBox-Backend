@@ -25,6 +25,8 @@ public abstract class MemberMapper {
     @Autowired
     private GroupMapper groupMapper;
 
+
+
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "createAt", ignore = true),
@@ -73,5 +75,20 @@ public abstract class MemberMapper {
             @Mapping(source = "groupIdList", target = "groupMemberList", qualifiedByName = "groupIdListToGroupMemberEntityList")
     })
     public abstract void updateFromPatchDto(MemberDto.MemberPatchDto MemberPatchDto, @MappingTarget MemberEntity MemberEntity);
+
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "createAt", ignore = true),
+            @Mapping(target = "modifiedAt", ignore = true),
+            @Mapping(target = "memberClass", ignore = true),
+            @Mapping(target = "cart", ignore = true),
+            @Mapping(target = "orderList", ignore = true),
+            @Mapping(target = "groupMemberList", ignore = true)
+    })
+    public abstract MemberEntity toJoinEntity(MemberDto.MemberJoinDto MemberJoinDto);
+
+    // 추가된 코드
+
+
 
 }

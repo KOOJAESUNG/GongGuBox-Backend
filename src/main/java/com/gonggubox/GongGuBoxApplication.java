@@ -17,10 +17,10 @@ import static org.springframework.web.servlet.function.RouterFunctions.route;
 @EnableJpaAuditing //Auditing 사용
 public class GongGuBoxApplication {
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public BCryptPasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 
 
 	public static void main(String[] args) {

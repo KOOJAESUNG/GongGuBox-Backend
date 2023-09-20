@@ -26,12 +26,14 @@ public class PrincipalDetailsService implements UserDetailsService {
 			AdminEntity adminEntity = adminRepository.findByUsername(username);
 
 			// session.setAttribute("loginUser", user);
-			return new PrincipalDetails(adminEntity);
+			return new com.gonggubox.config.spring_security.auth.PrincipalDetails(adminEntity);
 		} else {
-			MemberEntity memberEntity = memberRepository.findByUsername(username);
+			//MemberEntity memberEntity = memberRepository.findByUsername(username);
 
+			MemberEntity memberEntity = memberRepository.findByUsername(username)
+					.orElseThrow(() -> new UsernameNotFoundException("찾을 수 없는 username: " + username));
 			// session.setAttribute("loginUser", user);
-			return new PrincipalDetails(memberEntity);
+			return new com.gonggubox.config.spring_security.auth.PrincipalDetails(memberEntity);
 		}
 	}
 }
