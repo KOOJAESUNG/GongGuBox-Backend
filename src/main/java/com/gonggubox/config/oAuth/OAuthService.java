@@ -47,7 +47,10 @@ public class OAuthService {
     @Value("${spring.security.oauth2.client.registration.google.client-secret}")
     private String googleClientSecret;
 
-
+    /**
+     *
+     * 카카오
+     */
 
     public String getKakaoAccessToken (String authorize_code) {
         String access_Token = "";
@@ -191,6 +194,11 @@ public class OAuthService {
             e.printStackTrace();
         }
     }
+
+    /**
+     *
+     * 구글
+     */
 
 
     public String getGoogleAccessToken(String authorize_code) {
