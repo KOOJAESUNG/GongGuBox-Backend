@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_JAR=$(ls ./build/libs/*.jar)
+BUILD_JAR=$(ls ./build/libs/*SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR) #~~~.jar 파일
 echo "> build 파일명: $JAR_NAME"
 

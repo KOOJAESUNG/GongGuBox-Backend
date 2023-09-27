@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BUILD_JAR=$(ls ./build/libs/*.jar)
+BUILD_JAR=$(ls ./build/libs/*SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR) # ~~~.jar 파일
 
 cp ./build/libs/$JAR_NAME ./build/libs/temp  #빌드 실패시 롤백을 위한 복사본 생성
