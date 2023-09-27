@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .hasAnyRole("ADMIN","MEMBER")
 
                         .requestMatchers("/member/join", "/member/login" ).permitAll() //authorization 항상 null
-                        .requestMatchers("/oauth2/code/**").permitAll()
+                        .requestMatchers("/oauth2/code/kakao","/oauth2/code/google" ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/**").authenticated() //나머지 post 인증 필요
                         .anyRequest().permitAll()
                 )

@@ -2,6 +2,8 @@ package com.gonggubox.config.oAuth;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 public class OAuthController {
 
     private final OAuthService oAuthService;
-    @ResponseBody
+//
     @GetMapping("/kakao")
-    public void kakaoCallback(@RequestParam String code) {
+    public ResponseEntity<String> kakaoCallback(@RequestParam String code) {
         log.info("code: " + code);
 
         // OAuthService를 통해 토큰을 얻어옴
@@ -25,11 +27,17 @@ public class OAuthController {
 
         // 얻어온 액세스 토큰을 사용하여 Kakao 사용자 정보를 조회
         oAuthService.createKakaoUser(accessToken);
+
+        // 액세스 토큰 반환
+        return new ResponseEntity<>(accessToken, HttpStatus.OK);
     }
 
+
+
+
     @ResponseBody
-    @GetMapping("/google")  //일단 accesstoken 받아오기
-    public void googleCallback(@RequestParam String code) {
+    @GetMapping("/google")
+    public ResponseEntity<String> googleCallback(@RequestParam String code) {
         log.info("code: " + code);
 
         // OAuthService를 통해 토큰을 얻어옴
@@ -38,6 +46,8 @@ public class OAuthController {
 
         // 얻어온 액세스 토큰을 사용하여 google 사용자 정보를 조회
          oAuthService.createGoogleUser(accessToken);
-        //return accessToken;
+
+        // 액세스 토큰 반환
+        return new ResponseEntity<>(accessToken, HttpStatus.OK);
     }
 }
