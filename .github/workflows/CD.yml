@@ -20,7 +20,7 @@ jobs:
             key: ${{ secrets.PI_KEY }}
             script_stop: true #스크립트 실행중 오류 발생시 중단
             script: |
-              cd SpringProject/GongGuBox-Backend/ 
+              cd spring_project/GongGuBox-Backend/ 
               git pull
               ./buildxtest
               ./reboot
