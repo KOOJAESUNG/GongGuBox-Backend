@@ -23,17 +23,26 @@ public abstract class GroupMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "itemList", ignore = true)
+            @Mapping(target = "itemList", ignore = true),
+            @Mapping(source = "groupName", target = "name"),
+            @Mapping(source = "groupAddress", target = "address"),
     })
     public abstract GroupEntity toEntity(GroupDto.GroupPostDto GroupPostDto);
 
 
+    @Mappings({
+            @Mapping(source = "id", target = "groupId"),
+            @Mapping(source = "name", target = "groupName"),
+            @Mapping(source = "address", target = "groupAddress"),
+    })
     public abstract GroupDto.GroupResponseDto toResponseDto(GroupEntity GroupEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "itemList", ignore = true),
+            @Mapping(source = "groupName", target = "name"),
+            @Mapping(source = "groupAddress", target = "address"),
     })
     public abstract void updateFromPatchDto(GroupDto.GroupPatchDto GroupPatchDto, @MappingTarget GroupEntity GroupEntity);
 
@@ -41,7 +50,7 @@ public abstract class GroupMapper {
     @Mappings({
             @Mapping(source = "id", target = "groupId"),
             @Mapping(source = "name", target = "groupName"),
-            @Mapping(source = "itemList", target = "itemList", qualifiedByName = "itemListToItemResponseDtoList")
+            @Mapping(source = "itemList", target = "groupItemList", qualifiedByName = "itemListToItemResponseDtoList")
     })
     public abstract GroupDto.GroupItemResponseDto toGroupItemResponseDto(GroupEntity group);
 

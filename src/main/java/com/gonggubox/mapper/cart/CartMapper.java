@@ -34,9 +34,10 @@ public abstract class CartMapper {
 
 
     @Mappings({
-            @Mapping(target = "totalPrice", expression = "java(this.getTotalPrice(cart.getCartItemList()))"),
+            @Mapping(target = "cartTotalPrice", expression = "java(this.getTotalPrice(cart.getCartItemList()))"),
             @Mapping(source = "cartItemList", target = "cartItemList", qualifiedByName = "cartItemEntityListToCartItemResponseDtoList"),
-            @Mapping(source = "member", target = "member", qualifiedByName = "memberEntityToMemberResponseDto")
+            @Mapping(source = "member", target = "cartOwnerMemberInfo", qualifiedByName = "memberEntityToMemberResponseDto"),
+            @Mapping(source = "id", target = "cartId")
     })
     public abstract CartDto.CartResponseDto toResponseDto(CartEntity cart);
 
@@ -47,8 +48,8 @@ public abstract class CartMapper {
         cartItemEntityList.forEach(o -> {
             temp.add(
                     CartDto.CartItemResponseDto.builder()
-                            .count(o.getCount())
-                            .item(itemMapper.toResponseDto(o.getItem()))
+                            .itemCount(o.getCount())
+                            .itemInfo(itemMapper.toResponseDto(o.getItem()))
                             .build()
             );
         });

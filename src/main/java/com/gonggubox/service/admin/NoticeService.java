@@ -36,9 +36,9 @@ public class NoticeService {
 
     @Transactional
     public NoticeDto.NoticeResponseDto updateNotice(NoticeDto.NoticePatchDto noticePatchDto) {
-        NoticeEntity noticeEntity = noticeRepository.findById(noticePatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        NoticeEntity noticeEntity = noticeRepository.findById(noticePatchDto.getNoticeId()).orElseThrow(EntityNotFoundException::new);
         noticeMapper.updateFromPatchDto(noticePatchDto, noticeEntity);
-        return noticeMapper.toResponseDto(noticeRepository.findById(noticePatchDto.getId()).orElseThrow(EntityNotFoundException::new));
+        return noticeMapper.toResponseDto(noticeRepository.findById(noticePatchDto.getNoticeId()).orElseThrow(EntityNotFoundException::new));
     }
     @Transactional
     public String deleteNotice(Long noticeId) {

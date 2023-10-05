@@ -22,12 +22,19 @@ public abstract class NoticeMapper {
             @Mapping(target = "createAt", ignore = true),
             @Mapping(target = "modifiedAt", ignore = true),
             @Mapping(target = "imageUrlList", ignore = true),
+            @Mapping(source = "noticePostDto.noticeTitle", target = "title"),
+            @Mapping(source = "noticePostDto.noticeContent", target = "content"),
             @Mapping(source = "admin", target = "admin")
     })
-    public abstract NoticeEntity toEntity(NoticeDto.NoticePostDto NoticePostDto, AdminEntity admin);
+    public abstract NoticeEntity toEntity(NoticeDto.NoticePostDto noticePostDto, AdminEntity admin);
 
 
-    @Mapping(source = "admin", target = "admin", qualifiedByName = "adminEntityToAdminResponseDto")
+    @Mappings({
+            @Mapping(source = "admin", target = "noticeWriterAdminInfo", qualifiedByName = "adminEntityToAdminResponseDto"),
+            @Mapping(source = "id", target = "noticeId"),
+            @Mapping(source = "content", target = "noticeContent"),
+            @Mapping(source = "imageUrlList", target = "noticeImageList"),
+    })
     public abstract NoticeDto.NoticeResponseDto toResponseDto(NoticeEntity NoticeEntity);
 
     @Named("adminEntityToAdminResponseDto")
@@ -44,6 +51,8 @@ public abstract class NoticeMapper {
             @Mapping(target = "modifiedAt", ignore = true),
             @Mapping(target = "imageUrlList", ignore = true),
             @Mapping(target = "admin", ignore = true),
+            @Mapping(source = "noticeTitle", target = "title"),
+            @Mapping(source = "noticeContent", target = "content"),
     })
     public abstract void updateFromPatchDto(NoticeDto.NoticePatchDto NoticePatchDto, @MappingTarget NoticeEntity NoticeEntity);
 

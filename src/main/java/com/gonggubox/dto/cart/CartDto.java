@@ -29,11 +29,11 @@ public class CartDto {
     @NoArgsConstructor
     @Builder
     public static class CartResponseDto {
-        private Long id;
+        private Long cartId;
 
-        private MemberDto.MemberResponseDto member;
+        private MemberDto.MemberResponseDto cartOwnerMemberInfo;
 
-        private Long totalPrice;
+        private Long cartTotalPrice;
 
         private List<CartItemResponseDto> cartItemList;
     }
@@ -45,9 +45,9 @@ public class CartDto {
     @Builder
     public static class CartItemResponseDto {
 
-        private Integer count; //상품의 개수
+        private Integer itemCount; //상품의 개수
 
-        private ItemDto.ItemResponseDto item;
+        private ItemDto.ItemResponseDto itemInfo;
 
     }
 

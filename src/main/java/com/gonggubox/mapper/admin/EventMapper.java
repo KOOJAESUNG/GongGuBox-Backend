@@ -22,13 +22,20 @@ public abstract class EventMapper {
             @Mapping(target = "createAt",ignore = true),
             @Mapping(target = "modifiedAt",ignore = true),
             @Mapping(target = "imageUrlList",ignore = true),
+            @Mapping(source = "eventPostDto.eventTitle", target = "title"),
+            @Mapping(source = "eventPostDto.eventContent", target = "content"),
             @Mapping(source = "admin",target = "admin")
     })
-    public abstract EventEntity toEntity(EventDto.EventPostDto EventPostDto, AdminEntity admin);
+    public abstract EventEntity toEntity(EventDto.EventPostDto eventPostDto, AdminEntity admin);
 
 
 
-    @Mapping(source = "admin", target = "admin", qualifiedByName = "adminEntityToAdminResponseDto")
+    @Mappings({
+            @Mapping(source = "admin", target = "eventWriterAdminInfo", qualifiedByName = "adminEntityToAdminResponseDto"),
+            @Mapping(source = "id", target = "eventId"),
+            @Mapping(source = "content", target = "eventContent"),
+            @Mapping(source = "imageUrlList", target = "eventImageList"),
+    })
     public abstract EventDto.EventResponseDto toResponseDto(EventEntity EventEntity);
 
     @Named("adminEntityToAdminResponseDto")
@@ -45,6 +52,8 @@ public abstract class EventMapper {
             @Mapping(target = "modifiedAt",ignore = true),
             @Mapping(target = "imageUrlList",ignore = true),
             @Mapping(target = "admin",ignore = true),
+            @Mapping(source = "eventTitle", target = "title"),
+            @Mapping(source = "eventContent", target = "content"),
     })
     public abstract void updateFromPatchDto(EventDto.EventPatchDto EventPatchDto, @MappingTarget EventEntity EventEntity);
 

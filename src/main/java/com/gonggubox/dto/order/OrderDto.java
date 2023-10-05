@@ -18,7 +18,7 @@ public class OrderDto {
 
         @NotNull
         @UniqueElements
-        private List<OrderItemDto.OrderItemPostDto> orderItemPostDtoList;
+        private List<OrderItemDto.OrderItemPostDto> orderItemList;
 
     }
 
@@ -29,13 +29,13 @@ public class OrderDto {
     @NoArgsConstructor
     @Builder
     public static class OrderResponseDto {
-        private Long id;
+        private Long orderId;
 
-        private Long memberId;
+        private Long orderedMemberId;
 
-        private Long totalPrice;
+        private Long orderTotalPrice;
 
-        private List<OrderItemDto.OrderItemResponseDto> orderItemResponseDtoList;
+        private List<OrderItemDto.OrderItemResponseDto> orderItemInfoList;
     }
 
     @Getter
@@ -47,8 +47,8 @@ public class OrderDto {
 
         @NotNull
         @Min(1)
-        private Long id;
+        private Long orderId;
 
-        private List<OrderItemDto.OrderItemPostDto> orderItems;
+        private List<OrderItemDto.OrderItemPostDto> orderItemList;
     }
 }

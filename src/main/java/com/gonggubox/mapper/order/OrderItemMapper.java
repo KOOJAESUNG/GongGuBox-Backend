@@ -46,7 +46,7 @@ public abstract class OrderItemMapper {
 
 
     @Mappings({
-            @Mapping(source = "item", target = "itemResponseDto", qualifiedByName = "itemEntityToItemResponseDto")
+            @Mapping(source = "item", target = "itemInfo", qualifiedByName = "itemEntityToItemResponseDto")
     })
     public abstract OrderItemDto.OrderItemResponseDto toResponseDto(OrderItemEntity orderItem);
 

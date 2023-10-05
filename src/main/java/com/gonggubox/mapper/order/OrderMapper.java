@@ -30,7 +30,7 @@ public abstract class OrderMapper {
             @Mapping(target = "createAt", ignore = true),
             @Mapping(target = "modifiedAt", ignore = true),
             @Mapping(target = "totalPrice", ignore = true), //todo : 구현
-            @Mapping(source = "orderPostDto.orderItemPostDtoList", target = "orderItems", qualifiedByName = "orderItemPostDtoListToOrderItemEntityList"),
+            @Mapping(source = "orderPostDto.orderItemList", target = "orderItemList", qualifiedByName = "orderItemPostDtoListToOrderItemEntityList"),
             @Mapping(source = "member", target = "member")
     })
     public abstract OrderEntity toEntity(OrderDto.OrderPostDto orderPostDto, MemberEntity member);
@@ -44,8 +44,10 @@ public abstract class OrderMapper {
     }
 
     @Mappings({
-            @Mapping(target = "memberId", expression = "java(orderEntity.getMember().getId())"),
-            @Mapping(source = "orderItems", target = "orderItemResponseDtoList", qualifiedByName = "orderItemListToOrderItemResponseDtoList"),
+            @Mapping(target = "orderedMemberId", expression = "java(orderEntity.getMember().getId())"),
+            @Mapping(source = "orderItemList", target = "orderItemInfoList", qualifiedByName = "orderItemListToOrderItemResponseDtoList"),
+            @Mapping(source = "id", target = "orderId"),
+            @Mapping(source = "totalPrice", target = "orderTotalPrice"),
     })
     public abstract OrderDto.OrderResponseDto toResponseDto(OrderEntity orderEntity);
 

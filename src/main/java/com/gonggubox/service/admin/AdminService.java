@@ -25,8 +25,8 @@ public class AdminService {
 
     @Transactional
     public AdminDto.AdminResponseDto createAdmin(AdminDto.AdminPostDto adminPostDto) {
-        if(!adminRepository.existsByUsername(adminPostDto.getUsername())){
-            adminPostDto.setPassword(bCryptPasswordEncoder.encode(adminPostDto.getPassword()));
+        if(!adminRepository.existsByUsername(adminPostDto.getAdminUsername())){
+            adminPostDto.setAdminPassword(bCryptPasswordEncoder.encode(adminPostDto.getAdminPassword()));
             return adminMapper.toResponseDto(adminRepository.save(adminMapper.toEntity(adminPostDto)));
         }
         else throw new RuntimeException("createAdmin : 이미 존재하는 username 입니다!!!");

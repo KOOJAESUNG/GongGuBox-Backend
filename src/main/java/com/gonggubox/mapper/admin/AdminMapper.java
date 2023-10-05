@@ -15,19 +15,32 @@ public interface AdminMapper {
     @Mappings({
             @Mapping(target = "id",ignore = true),
             @Mapping(target = "createAt",ignore = true),
-            @Mapping(target = "modifiedAt",ignore = true)
+            @Mapping(target = "modifiedAt",ignore = true),
+            @Mapping(source = "adminPassword", target = "password"),
+            @Mapping(source = "adminUsername", target = "username"),
+            @Mapping(source = "adminEmail", target = "email"),
+            @Mapping(source = "adminPhoneNumber", target = "phoneNumber"),
     })
     AdminEntity toEntity(AdminDto.AdminPostDto AdminPostDto);
 
 
-
+    @Mappings({
+            @Mapping(source = "id", target = "adminId"),
+            @Mapping(source = "username", target = "adminUsername"),
+            @Mapping(source = "email", target = "adminEmail"),
+            @Mapping(source = "phoneNumber", target = "adminPhoneNumber"),
+    })
     AdminDto.AdminResponseDto toResponseDto(AdminEntity AdminEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "createAt",ignore = true),
-            @Mapping(target = "modifiedAt",ignore = true)
+            @Mapping(target = "modifiedAt",ignore = true),
+            @Mapping(source = "adminPassword", target = "password"),
+            @Mapping(source = "adminUsername", target = "username"),
+            @Mapping(source = "adminEmail", target = "email"),
+            @Mapping(source = "adminPhoneNumber", target = "phoneNumber"),
     })
     public void updateFromPatchDto(AdminDto.AdminPatchDto AdminPatchDto, @MappingTarget AdminEntity AdminEntity);
 

@@ -34,6 +34,10 @@ public abstract class MemberMapper {
             @Mapping(target = "memberClass", ignore = true),
             @Mapping(target = "cart", ignore = true),
             @Mapping(target = "orderList", ignore = true),
+            @Mapping(source = "memberPassword", target = "password"),
+            @Mapping(source = "memberUsername", target = "username"),
+            @Mapping(source = "memberEmail", target = "email"),
+            @Mapping(source = "memberPhoneNumber", target = "phoneNumber"),
             @Mapping(source = "groupIdList", target = "groupMemberList", qualifiedByName = "groupIdListToGroupMemberEntityList")
     })
     public abstract MemberEntity toEntity(MemberDto.MemberPostDto MemberPostDto);
@@ -50,7 +54,12 @@ public abstract class MemberMapper {
         return temp;
     }
 
-    @Mapping(source = "groupMemberList", target = "groupList", qualifiedByName = "groupMemberListToGroupResponseDtoList")
+    @Mappings({
+            @Mapping(source = "groupMemberList", target = "groupInfoList", qualifiedByName = "groupMemberListToGroupResponseDtoList"),
+            @Mapping(source = "username", target = "memberUsername"),
+            @Mapping(source = "email", target = "memberEmail"),
+            @Mapping(source = "phoneNumber", target = "memberPhoneNumber"),
+    })
     public abstract MemberDto.MemberResponseDto toResponseDto(MemberEntity MemberEntity);
 
     @Named("groupMemberListToGroupResponseDtoList")
@@ -72,6 +81,10 @@ public abstract class MemberMapper {
             @Mapping(target = "modifiedAt", ignore = true),
             @Mapping(target = "cart", ignore = true),
             @Mapping(target = "orderList", ignore = true),
+            @Mapping(source = "memberPassword", target = "password"),
+            @Mapping(source = "memberUsername", target = "username"),
+            @Mapping(source = "memberEmail", target = "email"),
+            @Mapping(source = "memberPhoneNumber", target = "phoneNumber"),
             @Mapping(source = "groupIdList", target = "groupMemberList", qualifiedByName = "groupIdListToGroupMemberEntityList")
     })
     public abstract void updateFromPatchDto(MemberDto.MemberPatchDto MemberPatchDto, @MappingTarget MemberEntity MemberEntity);
@@ -83,7 +96,11 @@ public abstract class MemberMapper {
             @Mapping(target = "memberClass", ignore = true),
             @Mapping(target = "cart", ignore = true),
             @Mapping(target = "orderList", ignore = true),
-            @Mapping(target = "groupMemberList", ignore = true)
+            @Mapping(target = "groupMemberList", ignore = true),
+            @Mapping(source = "memberPassword", target = "password"),
+            @Mapping(source = "memberUsername", target = "username"),
+            @Mapping(source = "memberEmail", target = "email"),
+            @Mapping(source = "memberPhoneNumber", target = "phoneNumber"),
     })
     public abstract MemberEntity toJoinEntity(MemberDto.MemberJoinDto MemberJoinDto);
 

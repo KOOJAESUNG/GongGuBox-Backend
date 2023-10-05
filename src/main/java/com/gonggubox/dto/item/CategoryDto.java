@@ -17,7 +17,7 @@ public class CategoryDto {
     public static class CategoryPostDto {
 
         @NotBlank
-        private String name;
+        private String categoryName;
 
         private String parentCategoryName; //null 이 아니라면 해당하는 부모 카테고리 아래에 카테고리를 생성
 
@@ -31,13 +31,13 @@ public class CategoryDto {
     @NoArgsConstructor
     @Builder
     public static class CategoryResponseDto {
-        private Long id;
+        private Long categoryId;
 
-        private String name;
+        private String categoryName;
 
-        private CategoryIdNameDto parent;
+        private CategoryIdNameDto parentCategoryInfo;
 
-        private List<CategoryIdNameDto> child;
+        private List<CategoryIdNameDto> childCategoryInfoList;
 
     }
 
@@ -47,9 +47,9 @@ public class CategoryDto {
     @NoArgsConstructor
     @Builder
     public static class CategoryIdNameDto {
-        private Long id;
+        private Long categoryId;
 
-        private String name;
+        private String categoryName;
     }
 
     @Getter
@@ -61,9 +61,9 @@ public class CategoryDto {
 
         @NotNull
         @Min(1)
-        private Long id;
+        private Long categoryId;
 
-        private String name;
+        private String categoryName;
 
         private String parentCategoryName;
 

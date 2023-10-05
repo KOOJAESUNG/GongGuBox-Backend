@@ -30,8 +30,8 @@ public class ItemService {
 
     @Transactional
     public ItemDto.ItemResponseDto updateItem(ItemDto.ItemPatchDto itemPatchDto) {
-        itemMapper.updateFromPatchDto(itemPatchDto, itemRepository.findById(itemPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
-        return itemMapper.toResponseDto(itemRepository.findById(itemPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
+        itemMapper.updateFromPatchDto(itemPatchDto, itemRepository.findById(itemPatchDto.getItemId()).orElseThrow(EntityNotFoundException::new));
+        return itemMapper.toResponseDto(itemRepository.findById(itemPatchDto.getItemId()).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional

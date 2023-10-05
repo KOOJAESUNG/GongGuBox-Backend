@@ -19,9 +19,9 @@ public class EventDto {
     public static class EventPostDto {
 
         @NotBlank
-        private String title;
+        private String eventTitle;
 
-        private String content;
+        private String eventContent;
 
         private EventType eventType;
 
@@ -33,15 +33,15 @@ public class EventDto {
     @NoArgsConstructor
     @Builder
     public static class EventResponseDto {
-        private Long id;
+        private Long eventId;
 
-        private String content;
+        private String eventContent;
 
         private EventType eventType;
 
-        private List<String> imageUrlList;
+        private List<String> eventImageList;
 
-        private AdminDto.AdminResponseDto admin;
+        private AdminDto.AdminResponseDto eventWriterAdminInfo;
     }
 
     @Getter
@@ -53,11 +53,11 @@ public class EventDto {
 
         @NotNull
         @Min(1)
-        private Long id;
+        private Long eventId;
 
-        private String title;
+        private String eventTitle;
 
-        private String content;
+        private String eventContent;
 
         private EventType eventType;
 

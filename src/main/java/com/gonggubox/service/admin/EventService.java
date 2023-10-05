@@ -36,9 +36,9 @@ public class EventService {
 
     @Transactional
     public EventDto.EventResponseDto updateEvent(EventDto.EventPatchDto eventPatchDto) {
-        EventEntity eventEntity = eventRepository.findById(eventPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        EventEntity eventEntity = eventRepository.findById(eventPatchDto.getEventId()).orElseThrow(EntityNotFoundException::new);
         eventMapper.updateFromPatchDto(eventPatchDto, eventEntity);
-        return eventMapper.toResponseDto(eventRepository.findById(eventPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
+        return eventMapper.toResponseDto(eventRepository.findById(eventPatchDto.getEventId()).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional

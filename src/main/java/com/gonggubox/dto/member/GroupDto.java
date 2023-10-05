@@ -19,10 +19,10 @@ public class GroupDto {
     public static class GroupPostDto {
 
         @NotBlank
-        private String name; //그룹명
+        private String groupName; //그룹명
 
         @NotNull
-        private Address address;
+        private Address groupAddress;
     }
 
     @Getter
@@ -31,11 +31,11 @@ public class GroupDto {
     @NoArgsConstructor
     @Builder
     public static class GroupResponseDto {
-        private Long id;
+        private Long groupId;
 
-        private String name; //그룹명
+        private String groupName; //그룹명
 
-        private Address address;
+        private Address groupAddress;
     }
 
     @Getter
@@ -48,7 +48,7 @@ public class GroupDto {
 
         private String groupName;
 
-        private List<ItemDto.ItemResponseDto> itemList;
+        private List<ItemDto.ItemResponseDto> groupItemList;
     }
 
 
@@ -61,10 +61,10 @@ public class GroupDto {
 
         @NotNull
         @Min(1)
-        private Long id;
+        private Long groupId;
 
-        private String name; //그룹명
+        private String groupName; //그룹명
 
-        private Address address;
+        private Address groupAddress;
     }
 }

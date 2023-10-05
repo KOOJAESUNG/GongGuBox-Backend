@@ -24,11 +24,11 @@ public class CategoryService {
     public CategoryDto.CategoryResponseDto addCategory(CategoryDto.CategoryPostDto categoryPostDto) {
         if (categoryPostDto.getParentCategoryName() != null) {
             CategoryEntity parentCategory = categoryRepository.findByName(categoryPostDto.getParentCategoryName()).orElseThrow(EntityNotFoundException::new);
-            parentCategory.getChild().add(categoryMapper.toEntity(categoryPostDto));
+            parentCategory.getChildList().add(categoryMapper.toEntity(categoryPostDto));
         } else {
             categoryRepository.save(categoryMapper.toEntity(categoryPostDto));
         }
-        return categoryMapper.toResponseDto(categoryRepository.findByName(categoryPostDto.getName()).orElseThrow(EntityNotFoundException::new));
+        return categoryMapper.toResponseDto(categoryRepository.findByName(categoryPostDto.getCategoryName()).orElseThrow(EntityNotFoundException::new));
     }
 
     public CategoryDto.CategoryResponseDto getCategoryById(Long categoryId) {
@@ -45,9 +45,9 @@ public class CategoryService {
 
     @Transactional
     public CategoryDto.CategoryResponseDto updateCategory(CategoryDto.CategoryPatchDto categoryPatchDto) {
-        CategoryEntity categoryEntity = categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new);
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryPatchDto.getCategoryId()).orElseThrow(EntityNotFoundException::new);
         categoryMapper.updateFromPatchDto(categoryPatchDto,categoryEntity);
-        return categoryMapper.toResponseDto(categoryRepository.findById(categoryPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
+        return categoryMapper.toResponseDto(categoryRepository.findById(categoryPatchDto.getCategoryId()).orElseThrow(EntityNotFoundException::new));
     }
 
 //    @Transactional

@@ -30,7 +30,7 @@ public class OrderItemDto {
 //    @Builder
     public static class OrderItemResponseDto {
 
-        private ItemDto.ItemResponseDto itemResponseDto;
+        private ItemDto.ItemResponseDto itemInfo;
 
         private Long count;
 

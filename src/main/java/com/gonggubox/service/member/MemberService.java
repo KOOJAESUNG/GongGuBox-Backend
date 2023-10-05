@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -36,13 +34,13 @@ public class MemberService {
     @Transactional
     public MemberDto.MemberResponseDto join(MemberDto.MemberJoinDto memberJoinDto) {
         //username 중복 check
-        memberRepository.findByUsername(memberJoinDto.getUsername())
+        memberRepository.findByUsername(memberJoinDto.getMemberUsername())
                 .ifPresent(user -> {
-                    throw new AppException(ErrorCode.USERNAME_DUPLICATED, memberJoinDto.getUsername() + "는 이미 있습니다.");
+                    throw new AppException(ErrorCode.USERNAME_DUPLICATED, memberJoinDto.getMemberUsername() + "는 이미 있습니다.");
                 });
 
         //인코딩해서 저장
-        if(memberJoinDto.getPassword()!=null) memberJoinDto.setPassword(bCryptPasswordEncoder.encode(memberJoinDto.getPassword()));
+        if(memberJoinDto.getMemberPassword()!=null) memberJoinDto.setMemberPassword(bCryptPasswordEncoder.encode(memberJoinDto.getMemberPassword()));
 
 
         // RequestDto -> Entity
@@ -95,8 +93,8 @@ public class MemberService {
 
     @Transactional
     public MemberDto.MemberResponseDto updateMember(Long memberId, MemberDto.MemberPatchDto memberPatchDto) {
-        if (memberPatchDto.getPassword() != null)
-            memberPatchDto.setPassword(bCryptPasswordEncoder.encode(memberPatchDto.getPassword()));
+        if (memberPatchDto.getMemberPassword() != null)
+            memberPatchDto.setMemberPassword(bCryptPasswordEncoder.encode(memberPatchDto.getMemberPassword()));
         memberMapper.updateFromPatchDto(memberPatchDto, memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new));
         return memberMapper.toResponseDto(memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new));
     }

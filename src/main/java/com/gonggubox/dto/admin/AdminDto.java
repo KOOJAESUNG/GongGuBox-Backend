@@ -17,19 +17,19 @@ public class AdminDto {
         @NotBlank
         @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$",
                 message = "비밀번호는 8~15자 영문, 숫자, 특수문자 조합이어야 합니다.")
-        private String password;
+        private String adminPassword;
 
         @NotBlank
-        private String username; //로그인 아이디
+        private String adminUsername; //로그인 아이디
 
         @NotBlank
         @Email
-        private String email;
+        private String adminEmail;
 
         @NotBlank
         @Pattern(regexp = "^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$",
                 message = "휴대폰 번호를 정확하게 입력해주세요.")
-        private String phoneNumber;
+        private String adminPhoneNumber;
     }
 
     @Getter
@@ -38,13 +38,13 @@ public class AdminDto {
     @NoArgsConstructor
     @Builder
     public static class AdminResponseDto {
-        private Long id;
+        private Long adminId;
 
-        private String username; //로그인 아이디
+        private String adminUsername; //로그인 아이디
 
-        private String email;
+        private String adminEmail;
 
-        private String phoneNumber;
+        private String adminPhoneNumber;
     }
 
     @Getter
@@ -56,15 +56,15 @@ public class AdminDto {
 
         @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$",
                 message = "비밀번호는 8~15자 영문, 숫자, 특수문자 조합이어야 합니다.")
-        private String password;
+        private String adminPassword;
 
-        private String username; //로그인 아이디
+        private String adminUsername; //로그인 아이디
 
         @Email
-        private String email;
+        private String adminEmail;
 
         @Pattern(regexp = "^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$",
                 message = "휴대폰 번호를 정확하게 입력해주세요.")
-        private String phoneNumber;
+        private String adminPhoneNumber;
     }
 }

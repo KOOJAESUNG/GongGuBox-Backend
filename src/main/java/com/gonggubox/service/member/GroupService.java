@@ -34,8 +34,8 @@ public class GroupService {
 
     @Transactional
     public GroupDto.GroupResponseDto updateGroup(GroupDto.GroupPatchDto groupPatchDto) {
-        groupMapper.updateFromPatchDto(groupPatchDto, groupRepository.findById(groupPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
-        return groupMapper.toResponseDto(groupRepository.findById(groupPatchDto.getId()).orElseThrow(EntityNotFoundException::new));
+        groupMapper.updateFromPatchDto(groupPatchDto, groupRepository.findById(groupPatchDto.getGroupId()).orElseThrow(EntityNotFoundException::new));
+        return groupMapper.toResponseDto(groupRepository.findById(groupPatchDto.getGroupId()).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional

@@ -18,9 +18,9 @@ public class NoticeDto {
     public static class NoticePostDto {
 
         @NotBlank
-        private String title;
+        private String noticeTitle;
 
-        private String content;
+        private String noticeContent;
 
         private NoticeType noticeType;
 
@@ -32,15 +32,15 @@ public class NoticeDto {
     @NoArgsConstructor
     @Builder
     public static class NoticeResponseDto {
-        private Long id;
+        private Long noticeId;
 
-        private String content;
+        private String noticeContent;
 
         private NoticeType noticeType;
 
-        private List<String> imageUrlList;
+        private List<String> noticeImageList;
 
-        private AdminDto.AdminResponseDto admin;
+        private AdminDto.AdminResponseDto noticeWriterAdminInfo;
     }
 
     @Getter
@@ -52,11 +52,11 @@ public class NoticeDto {
 
         @NotNull
         @Min(1)
-        private Long id;
+        private Long noticeId;
 
-        private String title;
+        private String noticeTitle;
 
-        private String content;
+        private String noticeContent;
 
         private NoticeType noticeType;
 

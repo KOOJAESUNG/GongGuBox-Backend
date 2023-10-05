@@ -23,7 +23,8 @@ public abstract class CategoryMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "child", ignore = true),
+            @Mapping(target = "childList", ignore = true),
+            @Mapping(source = "categoryName", target = "name"),
             @Mapping(source = "parentCategoryName", target = "parent", qualifiedByName = "categoryNameToCategoryEntity")
     })
     public abstract CategoryEntity toEntity(CategoryDto.CategoryPostDto categoryPostDto);
@@ -36,11 +37,17 @@ public abstract class CategoryMapper {
 
 
     @Mappings({
-            @Mapping(target = "parent", expression = "java(toIdNameDto(categoryEntity.getParent()))"),
-            @Mapping(target = "child", expression = "java(toIdNameDtoList(categoryEntity.getChild()))")
+            @Mapping(target = "parentCategoryInfo", expression = "java(toIdNameDto(categoryEntity.getParent()))"),
+            @Mapping(target = "childCategoryInfoList", expression = "java(toIdNameDtoList(categoryEntity.getChildList()))"),
+            @Mapping(source = "id", target = "categoryId"),
+            @Mapping(source = "name", target = "categoryName"),
     })
     public abstract CategoryDto.CategoryResponseDto toResponseDto(CategoryEntity categoryEntity);
 
+    @Mappings({
+            @Mapping(source = "id", target = "categoryId"),
+            @Mapping(source = "name", target = "categoryName"),
+    })
     abstract CategoryDto.CategoryIdNameDto toIdNameDto(CategoryEntity categoryEntity);
 
     abstract List<CategoryDto.CategoryIdNameDto> toIdNameDtoList(List<CategoryEntity> categoryEntityList);
@@ -49,8 +56,9 @@ public abstract class CategoryMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
             @Mapping(target = "id", ignore = true),
+            @Mapping(source = "categoryName", target = "name"),
             @Mapping(source = "parentCategoryName", target = "parent", qualifiedByName = "categoryNameToCategoryEntity"),
-            @Mapping(source = "childCategoryNameList", target = "child", qualifiedByName = "categoryNameListToCategoryEntityList")
+            @Mapping(source = "childCategoryNameList", target = "childList", qualifiedByName = "categoryNameListToCategoryEntityList")
     })
     public abstract void updateFromPatchDto(CategoryDto.CategoryPatchDto CategoryPatchDto, @MappingTarget CategoryEntity categoryEntity);
 

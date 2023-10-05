@@ -23,25 +23,25 @@ public class ItemDto {
 
         @NotBlank
         @Size(max = 50)
-        private String name; //상품명
+        private String itemName; //상품명
 
         @NotNull
         @Min(1)
-        private Long price; //가격
+        private Long itemPrice; //가격
 
         @NotNull
         @Min(1)
-        private Integer count; //수량. if 1+2 --> 3
+        private Integer totalItemCount; //수량. if 1+2 --> 3
 
         private String itemLink; //상품 링크
 
-        private Address address; // 약속장소
+        private Address meetingAddress; // 약속장소
 
-        private String content; //설명
+        private String itemExplain; //설명
 
         @NotNull
         @Min(1)
-        private Long groupId;
+        private Long groupId; //그룹은 동명인 그룹이 여러개 존재할 수 있으므로 id 로 처리한다
 
     }
 
@@ -51,25 +51,25 @@ public class ItemDto {
     @NoArgsConstructor
     @Builder
     public static class ItemResponseDto {
-        private Long id;
+        private Long itemId;
 
-        private String name; //상품명
+        private String itemName; //상품명
 
-        private List<String> imageList; //상품 이미지
+        private List<String> itemImageList; //상품 이미지
 
-        private Long price; //가격
+        private Long itemPrice; //가격
 
-        private Integer count; //수량. if 1+2 --> 3
+        private Integer totalItemCount; //수량. if 1+2 --> 3
 
         private String itemLink; //상품 링크
 
-        private Address address; // 약속장소
+        private Address meetingAddress; // 약속장소
 
-        private String content; //설명
+        private String itemExplain; //설명
 
-        private ItemStatus itemStatus; //상태
+        private ItemStatus itemStatus; //상태. 모집중, 모집완료 등등
 
-        private GroupDto.GroupResponseDto group;
+        private GroupDto.GroupResponseDto groupInfo;
 
     }
 
@@ -82,25 +82,25 @@ public class ItemDto {
 
         @NotNull
         @Min(1)
-        private Long id;
+        private Long itemId;
 
-        private String name; //상품명
+        private String itemName; //상품명
 
 //        private List<String> imageList; //상품 이미지
 
-        private Long price; //가격
+        private Long itemPrice; //가격
 
-        private Integer count; //수량. if 1+2 --> 3
+        private Integer totalItemCount; //수량. if 1+2 --> 3
 
         private String itemLink; //상품 링크
 
-        private Address address; // 약속장소
+        private Address meetingAddress; // 약속장소
 
-        private String content; //설명
+        private String itemExplain; //설명
 
-        private ItemStatus itemStatus; //상태
+        private ItemStatus itemStatus; //상태. 모집중, 모집완료 등등
 
-        private Long groupId;
+        private Long groupId; //그룹은 동명인 그룹이 여러개 존재할 수 있으므로 id 로 처리한다
 
     }
 }
