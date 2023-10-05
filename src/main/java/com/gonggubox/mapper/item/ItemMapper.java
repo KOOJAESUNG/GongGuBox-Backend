@@ -56,6 +56,7 @@ public abstract class ItemMapper {
 
     @Named("groupToGroupInfo")
     GroupDto.GroupResponseDto groupToGroupInfo(GroupEntity group) {
+        if(group == null) return null;
         return GroupDto.GroupResponseDto.builder()
                 .groupId(group.getId())
                 .groupAddress(group.getAddress())

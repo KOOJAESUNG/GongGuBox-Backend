@@ -35,6 +35,7 @@ public abstract class EventMapper {
             @Mapping(source = "id", target = "eventId"),
             @Mapping(source = "content", target = "eventContent"),
             @Mapping(source = "imageUrlList", target = "eventImageList"),
+            @Mapping(source = "title", target = "eventTitle")
     })
     public abstract EventDto.EventResponseDto toResponseDto(EventEntity EventEntity);
 

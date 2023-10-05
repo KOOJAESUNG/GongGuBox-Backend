@@ -35,6 +35,8 @@ public class EventDto {
     public static class EventResponseDto {
         private Long eventId;
 
+        private String eventTitle;
+
         private String eventContent;
 
         private EventType eventType;
