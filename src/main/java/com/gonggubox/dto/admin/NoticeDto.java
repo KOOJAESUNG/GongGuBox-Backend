@@ -34,6 +34,8 @@ public class NoticeDto {
     public static class NoticeResponseDto {
         private Long noticeId;
 
+        private String noticeTitle;
+
         private String noticeContent;
 
         private NoticeType noticeType;

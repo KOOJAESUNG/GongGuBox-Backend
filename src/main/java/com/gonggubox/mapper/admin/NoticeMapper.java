@@ -34,6 +34,7 @@ public abstract class NoticeMapper {
             @Mapping(source = "id", target = "noticeId"),
             @Mapping(source = "content", target = "noticeContent"),
             @Mapping(source = "imageUrlList", target = "noticeImageList"),
+            @Mapping(source = "title", target = "noticeTitle"),
     })
     public abstract NoticeDto.NoticeResponseDto toResponseDto(NoticeEntity NoticeEntity);
 
