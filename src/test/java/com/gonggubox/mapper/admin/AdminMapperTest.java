@@ -2,7 +2,6 @@ package com.gonggubox.mapper.admin;
 
 import com.gonggubox.domain.admin.AdminEntity;
 import com.gonggubox.dto.admin.AdminDto;
-import com.gonggubox.repository.admin.AdminRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,12 +18,10 @@ import java.util.List;
 class AdminMapperTest {
 
     @Autowired
-    AdminRepository adminRepository;
-
-    @Autowired
     AdminMapper adminMapper;
 
     private final List<AdminDto.AdminPostDto> adminPostDtoList = new ArrayList<>();
+    private final List<AdminEntity> adminEntityList = new ArrayList<>();
 
     @Test
     @DisplayName("toEntity")
@@ -45,7 +42,7 @@ class AdminMapperTest {
     @DisplayName("toResponseDto")
     void toResponseDto() {
         for (int i = 0; i < 5; i++) {
-            AdminDto.AdminResponseDto dto = adminMapper.toResponseDto(adminRepository.findByUsername("adminentity" + i));
+            AdminDto.AdminResponseDto dto = adminMapper.toResponseDto(adminEntityList.get(i));
 
             Assertions.assertEquals("adminentity" + i + "@email.com",dto.getAdminEmail());
             Assertions.assertEquals("010-1111-112" + i,dto.getAdminPhoneNumber());
@@ -63,7 +60,7 @@ class AdminMapperTest {
                     .adminUsername(null)
                     .adminPhoneNumber("010-1111-113" + i)
                     .build();
-            AdminEntity entity = adminRepository.findByUsername("adminentity" + i);
+            AdminEntity entity = adminEntityList.get(i);
             adminMapper.updateFromPatchDto(patch,entity);
 
             Assertions.assertEquals("adminpatch" + i + "@email.com",entity.getEmail());
@@ -90,7 +87,7 @@ class AdminMapperTest {
             temp.setPassword("adminentity!" + i);
             temp.setPhoneNumber("010-1111-112" + i);
             temp.setUsername("adminentity" + i);
-            adminRepository.save(temp);
+            adminEntityList.add(temp);
 
         }
 
