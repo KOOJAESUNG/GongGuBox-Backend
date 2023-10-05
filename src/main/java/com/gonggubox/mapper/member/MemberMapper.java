@@ -59,6 +59,7 @@ public abstract class MemberMapper {
             @Mapping(source = "username", target = "memberUsername"),
             @Mapping(source = "email", target = "memberEmail"),
             @Mapping(source = "phoneNumber", target = "memberPhoneNumber"),
+            @Mapping(source = "id", target = "memberId")
     })
     public abstract MemberDto.MemberResponseDto toResponseDto(MemberEntity MemberEntity);
 

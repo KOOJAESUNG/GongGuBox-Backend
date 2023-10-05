@@ -95,6 +95,8 @@ public class MemberDto {
     @Builder
     public static class MemberResponseDto {
 
+        private Long memberId;
+
         private String memberUsername; //로그인 아이디
 
         private String memberEmail;
