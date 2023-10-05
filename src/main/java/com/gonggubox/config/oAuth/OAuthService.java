@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -104,8 +106,12 @@ public class OAuthService {
             e.printStackTrace();
         }
 
+        log.info("access_token!!! : " + access_Token);
         return access_Token;
     }
+
+
+
 
     public void createKakaoUser(String token) {
 
