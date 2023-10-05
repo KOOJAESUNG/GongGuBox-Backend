@@ -38,11 +38,11 @@ public class OrderEntity extends TimeStamp {
     @UniqueElements
     @NotNull
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItemEntity> orderItems = new ArrayList<>();
+    private List<OrderItemEntity> orderItemList = new ArrayList<>();
 
 
     public void setOrderInOrderItems() {
-        orderItems.forEach(o->o.setOrder(this));
+        orderItemList.forEach(o->o.setOrder(this));
     }
 
 }

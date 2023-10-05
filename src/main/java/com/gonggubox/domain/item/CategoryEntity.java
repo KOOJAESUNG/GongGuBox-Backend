@@ -31,6 +31,6 @@ public class CategoryEntity {
     private CategoryEntity parent; //이 카테고리의 상위 카테고리.
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CategoryEntity> child = new ArrayList<>(); //이 카테고리의 하위 카테고리.
+    private List<CategoryEntity> childList = new ArrayList<>(); //이 카테고리의 하위 카테고리.
 
 }
