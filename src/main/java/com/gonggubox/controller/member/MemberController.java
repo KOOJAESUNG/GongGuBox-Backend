@@ -40,8 +40,8 @@ public class MemberController {
 //        return ResponseEntity.ok().body(memberService.createMember(memberPostDto));
 //    }
 
-    @GetMapping("/getMemberById")
-    public ResponseEntity<?> getMemberById(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    @GetMapping("/getMember")
+    public ResponseEntity<?> getMember(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(memberService.getMemberById(principalDetails.getUser().getId()));
     }
 
