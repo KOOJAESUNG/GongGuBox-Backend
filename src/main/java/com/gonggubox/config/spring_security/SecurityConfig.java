@@ -1,13 +1,15 @@
 package com.gonggubox.config.spring_security;
 
-
-import com.gonggubox.service.member.MemberService;
-import lombok.RequiredArgsConstructor;
+import com.gonggubox.config.spring_security.jwt.JwtAuthenticationFilter;
+import com.gonggubox.config.spring_security.jwt.JwtAuthorizationFilter;
+import com.gonggubox.config.spring_security.jwt.JwtExceptionHandlerFilter;
+import com.gonggubox.repository.admin.AdminRepository;
+import com.gonggubox.repository.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,25 +17,39 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
-@EnableWebSecurity
-@RequiredArgsConstructor
+@EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록
 public class SecurityConfig {
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
     private CorsConfig corsConfig;
 
-    private final MemberService memberService;
-
-    @Value("${jwt.token.secret}")
-    private String secretKey;
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .httpBasic(AbstractHttpConfigurer::disable)// UI 쪽 disable
-                .csrf(AbstractHttpConfigurer::disable) //cross - site 기능
-                .addFilter(corsConfig.corsFilter()) //cross-site에서 도메인 다를 때 허용
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        AuthenticationManager authenticationManager = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
+
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement((sessionManagement) ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .addFilter(corsConfig.corsFilter())
+                .addFilter(new JwtAuthenticationFilter(authenticationManager))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, adminRepository))
+                .addFilterBefore(new JwtExceptionHandlerFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/adminRole/**","/googleOtp/**")
                         .hasAnyRole("ADMIN")
@@ -42,17 +58,16 @@ public class SecurityConfig {
                         .requestMatchers("/sse/**")
                         .hasAnyRole("ADMIN","MEMBER")
 
-                        .requestMatchers("/member/join", "/member/login" ).permitAll() //authorization 항상 null
-                        .requestMatchers("/oauth2/code/kakao","/oauth2/code/google" ).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/**").authenticated() //나머지 post 인증 필요
-                        .anyRequest().permitAll()
-                )
-                .sessionManagement((sessionManagement) ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .addFilterBefore(new JwtFilter(memberService, secretKey), UsernamePasswordAuthenticationFilter.class) //JwtFilter 먼저 처리
-
+//                        .requestMatchers("/admin/getAdmin")
+//                        .hasAnyRole("ADMIN")
+//                        .requestMatchers("/api/v1/user/**")
+//                        // ROLE_은 알아서 붙여줌!!
+//                        .hasAnyRole("MEMBER", "ADMIN")
+//                        .requestMatchers("/api/v1/manager/**")
+//                        .hasAnyRole("ADMIN")
+//                        .requestMatchers("/api/v1/admin/**")
+//                        .hasAnyRole("ADMIN")
+                        .anyRequest().permitAll())
                 .build();
     }
 }
-
