@@ -1,8 +1,10 @@
 package com.gonggubox.config.spring_security;
 
+import com.gonggubox.config.spring_security.auth.PrincipalDetailsService;
 import com.gonggubox.config.spring_security.jwt.JwtAuthenticationFilter;
 import com.gonggubox.config.spring_security.jwt.JwtAuthorizationFilter;
 import com.gonggubox.config.spring_security.jwt.JwtExceptionHandlerFilter;
+import com.gonggubox.config.spring_security.jwt.TokenUtils;
 import com.gonggubox.repository.admin.AdminRepository;
 import com.gonggubox.repository.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,12 @@ public class SecurityConfig {
     private AdminRepository adminRepository;
 
     @Autowired
+    private PrincipalDetailsService principalDetailsService;
+
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    @Autowired
     private CorsConfig corsConfig;
 
     @Bean
@@ -47,8 +55,8 @@ public class SecurityConfig {
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilter(corsConfig.corsFilter())
-                .addFilter(new JwtAuthenticationFilter(authenticationManager))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, adminRepository))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager,tokenUtils))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, adminRepository, principalDetailsService, tokenUtils))
                 .addFilterBefore(new JwtExceptionHandlerFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/adminRole/**","/googleOtp/**")
