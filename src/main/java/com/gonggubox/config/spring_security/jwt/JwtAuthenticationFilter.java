@@ -78,16 +78,27 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
-		PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
-		
+		PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+
+		//jwt token 생성
 		String jwtToken = JWT.create()
-				.withSubject(principalDetailis.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.expirationTime))
-				.withClaim("id", principalDetailis.getUser().getId())
-				.withClaim("username", principalDetailis.getUser().getUsername())
-				.sign(Algorithm.HMAC512(JwtProperties.secret));
-		
-		response.addHeader(JwtProperties.headerString, jwtToken);
+				.withSubject(principalDetails.getUsername())
+				.withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.jwtExpirationTime))
+				.withClaim("id", principalDetails.getUser().getId())
+				.withClaim("username", principalDetails.getUser().getUsername())
+				.sign(Algorithm.HMAC512(JwtProperties.jwtSecret));
+
+		//refresh token 생성
+		String refreshToken = JWT.create()
+				.withSubject(principalDetails.getUsername())
+				.withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.refreshExpirationTime))
+				.withClaim("id", principalDetails.getUser().getId())
+				.withClaim("username", principalDetails.getUser().getUsername())
+				.sign(Algorithm.HMAC512(JwtProperties.refreshSecret));
+
+		//response header에 token 담기
+		response.addHeader(JwtProperties.jwtHeaderString, jwtToken);
+		response.addHeader(JwtProperties.refreshHeaderString,refreshToken);
 	}
 	
 }

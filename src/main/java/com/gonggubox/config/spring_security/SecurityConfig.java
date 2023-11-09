@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/adminRole/**","/googleOtp/**")
                         .hasAnyRole("ADMIN")
-                        .requestMatchers("/memberRole/**","/coolSms/**")
+                        .requestMatchers("/member/getMember")
                         .hasAnyRole("MEMBER")
                         .requestMatchers("/sse/**")
                         .hasAnyRole("ADMIN","MEMBER")

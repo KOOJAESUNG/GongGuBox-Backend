@@ -6,19 +6,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtProperties {
 
-    protected static String secret;
-    protected static Long expirationTime;
+    protected static String jwtSecret;
+    protected static String refreshSecret;
+    protected static Long jwtExpirationTime;
+    protected static Long refreshExpirationTime;
     protected static String tokenPrefix;
-    protected static String headerString;
+    protected static String jwtHeaderString;
+    protected static String refreshHeaderString;
 
-    @Value("${jwt.secret}")
-    public void setSecret(String secret) {
-        JwtProperties.secret = secret;
+    @Value("${jwt.jwt-secret}")
+    public void setJwtSecret(String secret) {
+        JwtProperties.jwtSecret = secret;
     }
 
-    @Value("${jwt.expiration-time}") //10일
-    public void setExpirationTime(Long expirationTime) {
-        JwtProperties.expirationTime = expirationTime;
+    @Value("${jwt.refresh-secret}")
+    public void setRefreshSecret(String secret) {
+        JwtProperties.refreshSecret = secret;
+    }
+
+    @Value("${jwt.jwt-expiration-time}") //10일
+    public void setJwtExpirationTime(Long expirationTime) {
+        JwtProperties.jwtExpirationTime = expirationTime;
+    }
+
+    @Value("${jwt.refresh-expiration-time}") //10일
+    public void setRefreshExpirationTime(Long expirationTime) {
+        JwtProperties.refreshExpirationTime = expirationTime;
     }
 
     @Value("${jwt.token-prefix}")
@@ -26,8 +39,13 @@ public class JwtProperties {
         JwtProperties.tokenPrefix = tokenPrefix+" ";
     }
 
-    @Value("${jwt.header-string}")
+    @Value("${jwt.jwt-header-string}")
     public void setHeaderString(String headerString) {
-        JwtProperties.headerString = headerString;
+        JwtProperties.jwtHeaderString = headerString;
+    }
+
+    @Value("${jwt.refresh-header-string}")
+    public void setRefreshHeaderString(String headerString) {
+        JwtProperties.refreshHeaderString = headerString;
     }
 }
